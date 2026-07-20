@@ -55,7 +55,7 @@ jobs:
           test -n "$SERVER_USER"
           scp -i ~/.ssh/id_ed25519 compose.load-balancing.yaml "$SERVER_USER@$SERVER_HOST:/opt/equity-trading/compose.load-balancing.yaml"
 
-      - name: Roll out API one instance at a time
+      - name: Roll out API and roll back failed health checks
         env:
           IMAGE_TAG: ${{ github.event.workflow_run.head_sha }}
           SERVER_HOST: ${{ vars.SERVER_HOST }}
@@ -65,10 +65,22 @@ jobs:
           set -euo pipefail
           cd /opt/equity-trading
 
+          state_file=".api-release.env"
+          if [ ! -s "$state_file" ]; then
+            echo "Missing $state_file; initialize LAST_SUCCESSFUL_API_TAG before deploying" >&2
+            exit 1
+          fi
+          source "$state_file"
+          previous_tag="${LAST_SUCCESSFUL_API_TAG:-}"
+          if [[ ! "$previous_tag" =~ ^[0-9a-f]{40}$ ]]; then
+            echo "LAST_SUCCESSFUL_API_TAG must be a 40-character lowercase Git commit SHA" >&2
+            exit 1
+          fi
+
           wait_healthy() {
             container="equity-trading-$1-1"
             for attempt in $(seq 1 18); do
-              status="$(docker inspect --format '{{.State.Health.Status}}' "$container")"
+              status="$(docker inspect --format '{{.State.Health.Status}}' "$container" 2>/dev/null || printf '%s' 'missing')"
               if [ "$status" = "healthy" ]; then
                 echo "$container is healthy"
                 return 0
@@ -81,17 +93,55 @@ jobs:
             return 1
           }
 
+          start_service() {
+            tag="$1"
+            service="$2"
+            API_IMAGE_TAG="$tag" docker compose -f compose.load-balancing.yaml up -d --no-deps "$service"
+          }
+
+          rollback_service() {
+            tag="$1"
+            service="$2"
+            echo "Rolling back $service to $tag"
+            API_IMAGE_TAG="$tag" docker compose -f compose.load-balancing.yaml pull "$service"
+            start_service "$tag" "$service"
+          }
+
+          write_release_state() {
+            tag="$1"
+            tmp_file="$(mktemp "${state_file}.XXXXXX")"
+            printf 'LAST_SUCCESSFUL_API_TAG=%s\n' "$tag" > "$tmp_file"
+            chmod 600 "$tmp_file"
+            mv "$tmp_file" "$state_file"
+            echo "Recorded last successful API tag: $tag"
+          }
+
           docker compose -f compose.load-balancing.yaml config --quiet
           docker compose -f compose.load-balancing.yaml pull api1 api2
 
-          docker compose -f compose.load-balancing.yaml up -d --no-deps api1
-          wait_healthy api1
+          start_service "$API_IMAGE_TAG" api1
+          if ! wait_healthy api1; then
+            rollback_service "$previous_tag" api1
+            wait_healthy api1 || exit 1
+            echo "api1 failed the new release and was restored to $previous_tag" >&2
+            exit 1
+          fi
 
           # Nginx refreshes Docker DNS every 10 seconds; let it see api1 before api2 restarts.
           sleep 12
 
-          docker compose -f compose.load-balancing.yaml up -d --no-deps api2
-          wait_healthy api2
+          start_service "$API_IMAGE_TAG" api2
+          if ! wait_healthy api2; then
+            rollback_service "$previous_tag" api2
+            wait_healthy api2 || exit 1
+            sleep 12
 
+            rollback_service "$previous_tag" api1
+            wait_healthy api1 || exit 1
+            echo "api2 failed the new release; both APIs were restored to $previous_tag" >&2
+            exit 1
+          fi
+
+          write_release_state "$API_IMAGE_TAG"
           docker compose -f compose.load-balancing.yaml ps
           REMOTE

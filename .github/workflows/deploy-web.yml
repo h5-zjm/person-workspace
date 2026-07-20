@@ -2,7 +2,7 @@ name: Deploy Web
 
 on:
   workflow_run:
-    workflows: ["Build and push Docker images"]
+    workflows: ["Deploy API"]
     types: [completed]
 
 permissions:
@@ -22,17 +22,6 @@ jobs:
     steps:
       - name: Check out source
         uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.workflow_run.head_sha }}
-
-      - name: Validate image tag
-        env:
-          IMAGE_TAG: ${{ github.event.workflow_run.head_sha }}
-        run: |
-          if [[ ! "$IMAGE_TAG" =~ ^[0-9a-f]{40}$ ]]; then
-            echo "image_tag must be a 40-character lowercase Git commit SHA" >&2
-            exit 1
-          fi
 
       - name: Configure SSH
         env:
@@ -57,20 +46,32 @@ jobs:
 
       - name: Pull, restart and wait for Web health
         env:
-          IMAGE_TAG: ${{ github.event.workflow_run.head_sha }}
           SERVER_HOST: ${{ vars.SERVER_HOST }}
           SERVER_USER: ${{ vars.SERVER_USER }}
         run: |
-          ssh -i ~/.ssh/id_ed25519 "$SERVER_USER@$SERVER_HOST" "WEB_IMAGE_TAG='$IMAGE_TAG' bash -s" <<'REMOTE'
+          ssh -i ~/.ssh/id_ed25519 "$SERVER_USER@$SERVER_HOST" "bash -s" <<'REMOTE'
           set -euo pipefail
           cd /opt/equity-trading
+
+          state_file=".api-release.env"
+          if [ ! -s "$state_file" ]; then
+            echo "Missing $state_file; Deploy API must succeed before Deploy Web" >&2
+            exit 1
+          fi
+          source "$state_file"
+          if [[ ! "${LAST_SUCCESSFUL_API_TAG:-}" =~ ^[0-9a-f]{40}$ ]]; then
+            echo "LAST_SUCCESSFUL_API_TAG must be a 40-character lowercase Git commit SHA" >&2
+            exit 1
+          fi
+          export WEB_IMAGE_TAG="$LAST_SUCCESSFUL_API_TAG"
+          echo "Deploying Web image tag: $WEB_IMAGE_TAG"
 
           docker compose -f compose.load-balancing.yaml config --quiet
           docker compose -f compose.load-balancing.yaml pull web
           docker compose -f compose.load-balancing.yaml up -d --no-deps web
 
           for attempt in $(seq 1 18); do
-            status="$(docker inspect --format '{{.State.Health.Status}}' equity-trading-web-1)"
+            status="$(docker inspect --format '{{.State.Health.Status}}' equity-trading-web-1 2>/dev/null || printf '%s' 'missing')"
             if [ "$status" = "healthy" ]; then
               echo "equity-trading-web-1 is healthy"
               exit 0
