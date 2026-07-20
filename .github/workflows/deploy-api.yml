@@ -1,0 +1,95 @@
+name: Deploy API
+
+on:
+  workflow_dispatch:
+    inputs:
+      image_tag:
+        description: "40-character Git commit SHA to deploy"
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-api
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Validate image tag
+        env:
+          IMAGE_TAG: ${{ inputs.image_tag }}
+        run: |
+          if [[ ! "$IMAGE_TAG" =~ ^[0-9a-f]{40}$ ]]; then
+            echo "image_tag must be a 40-character lowercase Git commit SHA" >&2
+            exit 1
+          fi
+
+      - name: Configure SSH
+        env:
+          SERVER_KNOWN_HOSTS: ${{ vars.SERVER_KNOWN_HOSTS }}
+          SERVER_SSH_KEY: ${{ secrets.SERVER_SSH_KEY }}
+        run: |
+          test -n "$SERVER_KNOWN_HOSTS"
+          test -n "$SERVER_SSH_KEY"
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "$SERVER_KNOWN_HOSTS" > ~/.ssh/known_hosts
+          printf '%s\n' "$SERVER_SSH_KEY" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+
+      - name: Copy deployment config
+        env:
+          SERVER_HOST: ${{ vars.SERVER_HOST }}
+          SERVER_USER: ${{ vars.SERVER_USER }}
+        run: |
+          test -n "$SERVER_HOST"
+          test -n "$SERVER_USER"
+          scp -i ~/.ssh/id_ed25519 compose.load-balancing.yaml "$SERVER_USER@$SERVER_HOST:/opt/equity-trading/compose.load-balancing.yaml"
+
+      - name: Roll out API one instance at a time
+        env:
+          IMAGE_TAG: ${{ inputs.image_tag }}
+          SERVER_HOST: ${{ vars.SERVER_HOST }}
+          SERVER_USER: ${{ vars.SERVER_USER }}
+        run: |
+          ssh -i ~/.ssh/id_ed25519 "$SERVER_USER@$SERVER_HOST" "API_IMAGE_TAG='$IMAGE_TAG' bash -s" <<'REMOTE'
+          set -euo pipefail
+          cd /opt/equity-trading
+
+          wait_healthy() {
+            container="equity-trading-$1-1"
+            for attempt in $(seq 1 18); do
+              status="$(docker inspect --format '{{.State.Health.Status}}' "$container")"
+              if [ "$status" = "healthy" ]; then
+                echo "$container is healthy"
+                return 0
+              fi
+              echo "Waiting for $container to become healthy (current: $status, attempt: $attempt/18)"
+              sleep 5
+            done
+
+            echo "$container did not become healthy in time" >&2
+            return 1
+          }
+
+          docker compose -f compose.load-balancing.yaml config --quiet
+          docker compose -f compose.load-balancing.yaml pull api1 api2
+
+          docker compose -f compose.load-balancing.yaml up -d --no-deps api1
+          wait_healthy api1
+
+          # Nginx refreshes Docker DNS every 10 seconds; let it see api1 before api2 restarts.
+          sleep 12
+
+          docker compose -f compose.load-balancing.yaml up -d --no-deps api2
+          wait_healthy api2
+
+          docker compose -f compose.load-balancing.yaml ps
+          REMOTE
