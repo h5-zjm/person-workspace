@@ -15,5 +15,4 @@ COPY --from=build /app/target/*.jar /app/app.jar
 
 EXPOSE 8080
 
-# Controlled rollback drill: Compose health checks and Nginx still use port 8080.
-ENTRYPOINT ["java", "-jar", "/app/app.jar", "--server.port=8081"]
+ENTRYPOINT ["java", "-jar", "/app/app.jar"]
