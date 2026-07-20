@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/>
+<title>市场 - 股权交易中心</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+                "tertiary": "#003f38",
+                "on-error-container": "#93000a",
+                "surface-dim": "#cedbec",
+                "inverse-primary": "#a2c9ff",
+                "surface": "#f7f9ff",
+                "on-background": "#101d29",
+                "surface-container-lowest": "#ffffff",
+                "on-tertiary-fixed": "#00201c",
+                "primary-fixed-dim": "#a2c9ff",
+                "error-container": "#ffdad6",
+                "on-secondary": "#ffffff",
+                "on-primary-fixed": "#001c38",
+                "surface-tint": "#27609c",
+                "error-red": "#C43D3D",
+                "tertiary-fixed": "#97f3e4",
+                "secondary-fixed": "#ffddb3",
+                "on-primary-fixed-variant": "#004881",
+                "on-secondary-container": "#724a00",
+                "border-subtle": "#D7DEE6",
+                "success-green": "#0C7C70",
+                "on-surface-variant": "#424750",
+                "outline": "#727781",
+                "primary-container": "#0b4f8a",
+                "on-error": "#ffffff",
+                "on-secondary-fixed": "#291800",
+                "surface-container-high": "#dce9fb",
+                "surface-container": "#e3efff",
+                "inverse-on-surface": "#e8f2ff",
+                "surface-container-highest": "#d6e4f5",
+                "inverse-surface": "#25323f",
+                "on-primary": "#ffffff",
+                "primary": "#003866",
+                "on-tertiary": "#ffffff",
+                "secondary-fixed-dim": "#feba54",
+                "surface-white": "#FFFFFF",
+                "background": "#F5F7FA",
+                "tertiary-fixed-dim": "#7bd6c8",
+                "secondary": "#825500",
+                "primary-fixed": "#d3e4ff",
+                "outline-variant": "#c2c7d1",
+                "on-tertiary-container": "#74cfc1",
+                "surface-bright": "#f7f9ff",
+                "error": "#ba1a1a",
+                "surface-container-low": "#edf4ff",
+                "on-surface": "#101d29",
+                "on-secondary-fixed-variant": "#633f00",
+                "on-primary-container": "#94c2ff",
+                "surface-variant": "#d6e4f5",
+                "on-tertiary-fixed-variant": "#005048",
+                "tertiary-container": "#00584f",
+                "secondary-container": "#feba54"
+        },
+        "borderRadius": {
+                "DEFAULT": "0.25rem",
+                "lg": "0.5rem",
+                "xl": "0.75rem",
+                "full": "9999px"
+        },
+        "spacing": {
+                "section-gap": "24px",
+                "base": "8px",
+                "card-padding": "16px",
+                "stack-gap-sm": "8px",
+                "page-margin": "16px",
+                "stack-gap-md": "12px"
+        },
+        "fontFamily": {
+                "headline-lg": [
+                        "Noto Sans SC"
+                ],
+                "number-lg": [
+                        "Inter"
+                ],
+                "display-lg": [
+                        "Noto Sans SC"
+                ],
+                "body-base": [
+                        "Noto Sans SC"
+                ],
+                "number-md": [
+                        "Inter"
+                ],
+                "label-sm": [
+                        "Noto Sans SC"
+                ],
+                "headline-md": [
+                        "Noto Sans SC"
+                ]
+        },
+        "fontSize": {
+                "headline-lg": [
+                        "22px",
+                        {
+                                "lineHeight": "30px",
+                                "fontWeight": "700"
+                        }
+                ],
+                "number-lg": [
+                        "24px",
+                        {
+                                "lineHeight": "30px",
+                                "fontWeight": "700"
+                        }
+                ],
+                "display-lg": [
+                        "30px",
+                        {
+                                "lineHeight": "40px",
+                                "letterSpacing": "-0.02em",
+                                "fontWeight": "700"
+                        }
+                ],
+                "body-base": [
+                        "15px",
+                        {
+                                "lineHeight": "23px",
+                                "fontWeight": "400"
+                        }
+                ],
+                "number-md": [
+                        "18px",
+                        {
+                                "lineHeight": "24px",
+                                "fontWeight": "600"
+                        }
+                ],
+                "label-sm": [
+                        "12px",
+                        {
+                                "lineHeight": "18px",
+                                "fontWeight": "500"
+                        }
+                ],
+                "headline-md": [
+                        "18px",
+                        {
+                                "lineHeight": "26px",
+                                "fontWeight": "600"
+                        }
+                ]
+        }
+},
+    },
+  }
+</script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=Noto+Sans+SC:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+  body {
+    background-color: theme('colors.background');
+    color: theme('colors.on-surface');
+    -webkit-font-smoothing: antialiased;
+  }
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+</style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-body-base pb-safe bg-background">
+<!-- TopAppBar: Mini-Program Safe Area Simulation -->
+<header class="w-full sticky top-0 z-50 bg-surface dark:bg-surface-dim pt-12 pb-2 px-page-margin">
+<div class="flex items-center justify-between h-10 w-full relative">
+<div class="text-on-surface-variant dark:text-on-surface-variant flex items-center h-full">
+<span class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed">市场</span>
+</div>
+<!-- Right side space reserved for WeChat Mini-Program Capsule -->
+<div class="w-24 h-8 rounded-full border border-border-subtle bg-surface-container-lowest opacity-20 hidden md:block"></div>
+</div>
+</header>
+<!-- Main Canvas -->
+<main class="w-full max-w-3xl mx-auto px-page-margin pt-stack-gap-md pb-[100px] flex flex-col gap-section-gap">
+<!-- Search Bar -->
+<section>
+<div class="relative w-full h-11 bg-surface-container-lowest rounded-lg border border-border-subtle flex items-center px-3 gap-2 focus-within:border-primary transition-colors duration-200 shadow-sm">
+<span class="material-symbols-outlined text-outline text-xl">search</span>
+<input class="flex-1 bg-transparent border-none outline-none font-body-base text-body-base text-on-surface placeholder:text-outline w-full h-full pb-0.5" placeholder="搜索企业简称、挂牌代码" type="text"/>
+<div class="w-[1px] h-4 bg-border-subtle mx-1"></div>
+<button class="flex items-center text-on-surface-variant">
+<span class="material-symbols-outlined text-xl">filter_list</span>
+</button>
+</div>
+</section>
+<!-- Market Overview Card -->
+<section>
+<div class="bg-surface-container-lowest rounded-xl p-card-padding border border-border-subtle shadow-sm flex flex-col gap-stack-gap-md">
+<div class="flex justify-between items-center">
+<h2 class="font-headline-md text-headline-md text-primary">市场概览</h2>
+<span class="font-label-sm text-label-sm text-outline">数据更新于 09:30</span>
+</div>
+<div class="grid grid-cols-3 gap-2 py-2">
+<div class="flex flex-col items-center gap-1 bg-surface-container p-3 rounded-lg border border-surface-variant">
+<span class="font-label-sm text-label-sm text-on-surface-variant">挂牌企业</span>
+<div class="flex items-baseline gap-1">
+<span class="font-number-lg text-number-lg text-primary">128</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">家</span>
+</div>
+</div>
+<div class="flex flex-col items-center gap-1 bg-surface-container p-3 rounded-lg border border-surface-variant">
+<span class="font-label-sm text-label-sm text-on-surface-variant">本周新增</span>
+<div class="flex items-baseline gap-1">
+<span class="font-number-lg text-number-lg text-primary">4</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">家</span>
+</div>
+</div>
+<div class="flex flex-col items-center gap-1 bg-surface-container p-3 rounded-lg border border-surface-variant">
+<span class="font-label-sm text-label-sm text-on-surface-variant">今日披露</span>
+<div class="flex items-baseline gap-1">
+<span class="font-number-lg text-number-lg text-primary">6</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">条</span>
+</div>
+</div>
+</div>
+<div class="flex justify-end border-t border-border-subtle pt-2">
+<a class="flex items-center gap-1 font-label-sm text-label-sm text-primary hover:text-primary-container transition-colors" href="#">
+                    查看市场报告
+                    <span class="material-symbols-outlined text-sm">chevron_right</span>
+</a>
+</div>
+</div>
+</section>
+<!-- Category Navigation -->
+<section>
+<div class="w-full overflow-x-auto hide-scrollbar pb-1 -mx-page-margin px-page-margin">
+<div class="flex items-center gap-2 w-max">
+<button class="px-4 py-1.5 rounded-full font-label-sm text-label-sm bg-primary text-on-primary border border-primary transition-colors whitespace-nowrap">全部</button>
+<button class="px-4 py-1.5 rounded-full font-label-sm text-label-sm bg-surface-container-lowest text-on-surface-variant border border-border-subtle hover:border-primary hover:text-primary transition-colors whitespace-nowrap">先进制造</button>
+<button class="px-4 py-1.5 rounded-full font-label-sm text-label-sm bg-surface-container-lowest text-on-surface-variant border border-border-subtle hover:border-primary hover:text-primary transition-colors whitespace-nowrap">数字经济</button>
+<button class="px-4 py-1.5 rounded-full font-label-sm text-label-sm bg-surface-container-lowest text-on-surface-variant border border-border-subtle hover:border-primary hover:text-primary transition-colors whitespace-nowrap">生物医药</button>
+<button class="px-4 py-1.5 rounded-full font-label-sm text-label-sm bg-surface-container-lowest text-on-surface-variant border border-border-subtle hover:border-primary hover:text-primary transition-colors whitespace-nowrap">消费服务</button>
+<button class="px-4 py-1.5 rounded-full font-label-sm text-label-sm bg-surface-container-lowest text-on-surface-variant border border-border-subtle hover:border-primary hover:text-primary transition-colors whitespace-nowrap">绿色能源</button>
+</div>
+</div>
+</section>
+<!-- Filter Toolbar -->
+<section class="flex items-center justify-between border-b border-border-subtle pb-2 sticky top-24 bg-background z-40 -mt-2 pt-2">
+<div class="flex items-center gap-4">
+<button class="flex items-center gap-1 font-label-sm text-label-sm text-on-surface hover:text-primary transition-colors">
+                全部地区
+                <span class="material-symbols-outlined text-sm">arrow_drop_down</span>
+</button>
+<button class="flex items-center gap-1 font-label-sm text-label-sm text-on-surface hover:text-primary transition-colors">
+                企业层级
+                <span class="material-symbols-outlined text-sm">arrow_drop_down</span>
+</button>
+<button class="flex items-center gap-1 font-label-sm text-label-sm text-on-surface hover:text-primary transition-colors">
+                最新挂牌
+                <span class="material-symbols-outlined text-sm">swap_vert</span>
+</button>
+</div>
+<span class="font-label-sm text-label-sm text-outline">共 128 家</span>
+</section>
+<!-- Listed Companies Cards -->
+<section class="flex flex-col gap-stack-gap-md -mt-2">
+<!-- Card 1 -->
+<a class="block bg-surface-container-lowest rounded-xl p-card-padding border border-border-subtle shadow-sm hover:border-primary transition-all duration-200" href="#">
+<div class="flex justify-between items-start mb-3">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center font-headline-md text-headline-md text-primary border border-surface-variant">
+                        智
+                    </div>
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="font-headline-md text-headline-md text-on-surface">智造新材</span>
+<span class="px-1.5 py-0.5 rounded text-[10px] bg-primary-fixed text-on-primary-fixed border border-primary-fixed-dim leading-none">已挂牌</span>
+</div>
+<span class="font-number-md text-number-md text-on-surface-variant">Q000128</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline">chevron_right</span>
+</div>
+<div class="flex flex-wrap gap-2 mb-3">
+<span class="px-2 py-0.5 rounded-full border border-border-subtle font-label-sm text-label-sm text-on-surface-variant bg-surface">先进制造</span>
+<span class="px-2 py-0.5 rounded-full border border-border-subtle font-label-sm text-label-sm text-on-surface-variant bg-surface">杭州</span>
+<span class="px-2 py-0.5 rounded-full border border-secondary-fixed-dim font-label-sm text-label-sm text-secondary bg-secondary-fixed">创新层</span>
+</div>
+<div class="pt-2 border-t border-border-subtle flex justify-between items-center">
+<span class="font-label-sm text-label-sm text-outline">最新披露</span>
+<span class="font-number-md text-number-md text-on-surface text-sm font-normal">2026-05-20</span>
+</div>
+</a>
+<!-- Card 2 -->
+<a class="block bg-surface-container-lowest rounded-xl p-card-padding border border-border-subtle shadow-sm hover:border-primary transition-all duration-200" href="#">
+<div class="flex justify-between items-start mb-3">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center font-headline-md text-headline-md text-primary border border-surface-variant">
+                        云
+                    </div>
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="font-headline-md text-headline-md text-on-surface">云链科技</span>
+<span class="px-1.5 py-0.5 rounded text-[10px] bg-primary-fixed text-on-primary-fixed border border-primary-fixed-dim leading-none">已挂牌</span>
+</div>
+<span class="font-number-md text-number-md text-on-surface-variant">Q000116</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline">chevron_right</span>
+</div>
+<div class="flex flex-wrap gap-2 mb-3">
+<span class="px-2 py-0.5 rounded-full border border-border-subtle font-label-sm text-label-sm text-on-surface-variant bg-surface">企业服务</span>
+<span class="px-2 py-0.5 rounded-full border border-border-subtle font-label-sm text-label-sm text-on-surface-variant bg-surface">宁波</span>
+<span class="px-2 py-0.5 rounded-full border border-tertiary-fixed-dim font-label-sm text-label-sm text-tertiary bg-tertiary-fixed">培育层</span>
+</div>
+<div class="pt-2 border-t border-border-subtle flex justify-between items-center">
+<span class="font-label-sm text-label-sm text-outline">最新披露</span>
+<span class="font-number-md text-number-md text-on-surface text-sm font-normal">2026-05-18</span>
+</div>
+</a>
+<!-- Card 3 -->
+<a class="block bg-surface-container-lowest rounded-xl p-card-padding border border-border-subtle shadow-sm hover:border-primary transition-all duration-200" href="#">
+<div class="flex justify-between items-start mb-3">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center font-headline-md text-headline-md text-primary border border-surface-variant">
+                        绿
+                    </div>
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="font-headline-md text-headline-md text-on-surface">绿源生物</span>
+<span class="px-1.5 py-0.5 rounded text-[10px] bg-primary-fixed text-on-primary-fixed border border-primary-fixed-dim leading-none">已挂牌</span>
+</div>
+<span class="font-number-md text-number-md text-on-surface-variant">Q000098</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline">chevron_right</span>
+</div>
+<div class="flex flex-wrap gap-2 mb-3">
+<span class="px-2 py-0.5 rounded-full border border-border-subtle font-label-sm text-label-sm text-on-surface-variant bg-surface">生物医药</span>
+<span class="px-2 py-0.5 rounded-full border border-border-subtle font-label-sm text-label-sm text-on-surface-variant bg-surface">绍兴</span>
+<span class="px-2 py-0.5 rounded-full border border-border-subtle font-label-sm text-label-sm text-on-surface-variant bg-surface-container">展示层</span>
+</div>
+<div class="pt-2 border-t border-border-subtle flex justify-between items-center">
+<span class="font-label-sm text-label-sm text-outline">最新披露</span>
+<span class="font-number-md text-number-md text-on-surface text-sm font-normal">2026-05-16</span>
+</div>
+</a>
+</section>
+<!-- Info Notice -->
+<section class="flex flex-col items-center gap-2 pb-8">
+<span class="font-label-sm text-label-sm text-outline">挂牌信息以企业最新披露文件为准</span>
+<a class="font-label-sm text-label-sm text-primary hover:text-primary-container transition-colors flex items-center" href="#">
+            查看信息披露
+            <span class="material-symbols-outlined text-sm ml-0.5">open_in_new</span>
+</a>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 w-full z-50 pb-safe border-t border-border-subtle dark:border-outline-variant bg-surface-container-lowest dark:bg-surface-container-low">
+<div class="flex justify-around items-center h-16 w-full max-w-3xl mx-auto">
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant hover:opacity-80 scale-95 active:transition-transform transition-colors duration-200">
+<span class="material-symbols-outlined text-2xl mb-1" style="font-variation-settings: 'FILL' 0;">home</span>
+<span class="font-label-sm text-label-sm">首页</span>
+</button>
+<button class="flex flex-col items-center justify-center text-primary dark:text-primary-fixed font-bold hover:opacity-80 scale-95 active:transition-transform transition-colors duration-200">
+<span class="material-symbols-outlined text-2xl mb-1" style="font-variation-settings: 'FILL' 1;">analytics</span>
+<span class="font-label-sm text-label-sm">市场</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant hover:opacity-80 scale-95 active:transition-transform transition-colors duration-200">
+<span class="material-symbols-outlined text-2xl mb-1" style="font-variation-settings: 'FILL' 0;">work</span>
+<span class="font-label-sm text-label-sm">项目</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant hover:opacity-80 scale-95 active:transition-transform transition-colors duration-200">
+<span class="material-symbols-outlined text-2xl mb-1" style="font-variation-settings: 'FILL' 0;">grid_view</span>
+<span class="font-label-sm text-label-sm">服务</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant hover:opacity-80 scale-95 active:transition-transform transition-colors duration-200">
+<span class="material-symbols-outlined text-2xl mb-1" style="font-variation-settings: 'FILL' 0;">person</span>
+<span class="font-label-sm text-label-sm">我的</span>
+</button>
+</div>
+</nav>
+</body></html>

@@ -1,0 +1,19 @@
+body {
+  margin: 0;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+.docs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--ui-space-5);
+}
+
+.docs-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ui-space-3);
+}

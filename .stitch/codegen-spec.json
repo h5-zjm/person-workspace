@@ -1,0 +1,1146 @@
+{
+  "version": "1.0",
+  "status": "ready",
+  "generatedAt": "2026-07-14T07:39:24.000Z",
+  "source": {
+    "stitchDirectory": ".stitch",
+    "metadataFile": ".stitch/metadata.json",
+    "designSystemFile": ".stitch/DESIGN.md",
+    "projectId": "13326581046254934398",
+    "sourceFingerprint": "sha256:b9e62bdb36dfdbd071b03c14102038a2756b914a0a2ef1ae116235acbcaa3c8e"
+  },
+  "implementation": {
+    "mode": "fullstack",
+    "frontend": {
+      "path": "FrontProject/wechat",
+      "framework": "uni-app",
+      "status": "confirmed-create",
+      "evidence": [
+        "user requirement: 前端项目放在 FrontProject/wechat，使用 uni-app",
+        "workspace inspection: FrontProject/wechat does not exist"
+      ]
+    },
+    "backend": {
+      "path": "JavaBackend",
+      "language": "Java",
+      "framework": "Spring Boot",
+      "buildTool": "Maven",
+      "dataMode": "in-memory mock data",
+      "status": "confirmed-create",
+      "evidence": [
+        "user requirement: 后端目录改为 JavaBackend",
+        "user requirement: Java 后端使用 Spring Boot + Maven",
+        "workspace inspection: JavaBackend does not exist"
+      ]
+    }
+  },
+  "scope": {
+    "includedScreens": [
+      "9e0821b570e24a23ba76b13628b398eb",
+      "5859c2f9b69546d5b39a87ff9cd6d648",
+      "93ed74155c7242baad7a03c641f6d658",
+      "6655fb46dafc464c823131839fc7b94a"
+    ],
+    "deferred": [
+      {
+        "feature": "服务页",
+        "reason": "UI 尚未生成"
+      },
+      {
+        "feature": "项目详情页及跳转",
+        "reason": "UI 尚未生成"
+      }
+    ]
+  },
+  "designSystem": {
+    "source": ".stitch/DESIGN.md",
+    "implementationNotes": [
+      "以 DESIGN.md 中的设计 token、组件规则和移动端安全区规则作为共享视觉规范。",
+      "页面按 Mobile-first 和 390px 设计基准实现，顶部状态栏与底部导航需要适配安全区。",
+      "不要直接复制 Stitch HTML 中的 Tailwind CDN、内联配置或示例数据；HTML 仅作为页面结构和可见内容证据。",
+      "四个页面的 loading、empty、error 状态统一复用公共状态组件。",
+      "没有对应 UI 的入口保留视觉外观，但当前阶段不响应点击。"
+    ]
+  },
+  "routes": [
+    {
+      "id": "route-home",
+      "path": "/pages/index/index",
+      "screenId": "9e0821b570e24a23ba76b13628b398eb",
+      "status": "confirmed",
+      "evidence": [
+        ".stitch/metadata.json: title=首页 - 股权交易中心",
+        "user requirement: 首页=index",
+        "framework mapping: uni-app page path=pages/index/index"
+      ]
+    },
+    {
+      "id": "route-market",
+      "path": "/pages/market/market",
+      "screenId": "5859c2f9b69546d5b39a87ff9cd6d648",
+      "status": "confirmed",
+      "evidence": [
+        ".stitch/metadata.json: title=市场 - 股权交易中心",
+        "user requirement: 市场=market",
+        "framework mapping: uni-app page path=pages/market/market"
+      ]
+    },
+    {
+      "id": "route-projects",
+      "path": "/pages/projects/projects",
+      "screenId": "93ed74155c7242baad7a03c641f6d658",
+      "status": "confirmed",
+      "evidence": [
+        ".stitch/metadata.json: title=项目 - 股权交易中心",
+        "user requirement: 项目=projects",
+        "framework mapping: uni-app page path=pages/projects/projects"
+      ]
+    },
+    {
+      "id": "route-profile",
+      "path": "/pages/profile/profile",
+      "screenId": "6655fb46dafc464c823131839fc7b94a",
+      "status": "confirmed",
+      "evidence": [
+        ".stitch/metadata.json: title=我的 - 股权交易中心",
+        "user requirement: 我的=profile",
+        "framework mapping: uni-app page path=pages/profile/profile"
+      ]
+    }
+  ],
+  "screens": [
+    {
+      "screenId": "9e0821b570e24a23ba76b13628b398eb",
+      "name": "首页",
+      "deviceType": "MOBILE",
+      "sourceHtml": ".stitch/designs/equity-trading-home.html",
+      "screenshot": ".stitch/designs/equity-trading-home.png",
+      "sourceFingerprint": "sha256:79f5cc6ded263daf60cbececdf483fa0031530b5ef4ffba035f9678ef510a67e",
+      "routeId": "route-home",
+      "purpose": "展示股权交易中心概览、主要业务入口、精选融资项目和公告资讯。",
+      "sections": [
+        {
+          "id": "home-header",
+          "name": "顶部导航与搜索",
+          "description": "展示平台名称、全局搜索输入框和消息入口。",
+          "evidence": [
+            ".stitch/designs/equity-trading-home.html: input placeholder=搜索企业、项目或公告"
+          ]
+        },
+        {
+          "id": "home-hero",
+          "name": "品牌主视觉",
+          "description": "展示平台定位、轮播指示和挂牌服务入口。",
+          "evidence": [
+            ".stitch/designs/equity-trading-home.html: text=连接资本与成长"
+          ]
+        },
+        {
+          "id": "home-market-overview",
+          "name": "市场概览",
+          "description": "展示挂牌企业、本月新增、累计融资和数据更新时间。",
+          "evidence": [
+            ".stitch/designs/equity-trading-home.html: section=Market Overview"
+          ]
+        },
+        {
+          "id": "home-service-grid",
+          "name": "业务入口宫格",
+          "description": "展示挂牌、融资、披露、投资者、政策、指南、路演和企业服务入口。",
+          "evidence": [
+            ".stitch/designs/equity-trading-home.html: section=Services Palace Grid"
+          ]
+        },
+        {
+          "id": "home-featured-projects",
+          "name": "精选融资项目",
+          "description": "展示项目名称、行业、认证或披露状态、融资金额和地区。",
+          "evidence": [
+            ".stitch/designs/equity-trading-home.html: heading=精选融资项目"
+          ]
+        },
+        {
+          "id": "home-market-dynamics",
+          "name": "公告与资讯",
+          "description": "通过中心公告、信息披露、政策资讯标签切换列表。",
+          "evidence": [
+            ".stitch/designs/equity-trading-home.html: labels=中心公告|信息披露|政策资讯"
+          ]
+        },
+        {
+          "id": "home-risk-and-navigation",
+          "name": "风险提示与底部导航",
+          "description": "展示风险提示，并提供首页、市场、项目、服务、我的五项导航。",
+          "evidence": [
+            ".stitch/designs/equity-trading-home.html: text=理性投资，审慎决策",
+            ".stitch/DESIGN.md: bottom navigation=首页|市场|项目|服务|我的"
+          ]
+        }
+      ],
+      "interactions": [
+        {
+          "id": "home-global-search",
+          "trigger": "submit",
+          "element": "搜索企业、项目或公告",
+          "action": "static",
+          "targetRouteId": null,
+          "apiId": null,
+          "status": "confirmed",
+          "evidence": [
+            ".stitch/designs/equity-trading-home.html: input placeholder=搜索企业、项目或公告",
+            "user requirement: 没有对应 UI 的入口当前不响应点击"
+          ]
+        },
+        {
+          "id": "home-market-entry",
+          "trigger": "click",
+          "element": "挂牌展示",
+          "action": "navigate",
+          "targetRouteId": "route-market",
+          "apiId": null,
+          "status": "confirmed",
+          "evidence": [
+            ".stitch/designs/equity-trading-home.html: service grid label=挂牌展示",
+            ".stitch/metadata.json: market screen=市场 - 股权交易中心"
+          ]
+        },
+        {
+          "id": "home-projects-entry",
+          "trigger": "click",
+          "element": "融资项目、查看全部",
+          "action": "navigate",
+          "targetRouteId": "route-projects",
+          "apiId": null,
+          "status": "confirmed",
+          "evidence": [
+            ".stitch/designs/equity-trading-home.html: labels=融资项目|精选融资项目|查看全部",
+            ".stitch/metadata.json: projects screen=项目 - 股权交易中心"
+          ]
+        },
+        {
+          "id": "home-unimplemented-entries",
+          "trigger": "click",
+          "element": "消息、了解挂牌服务、信息披露、投资者服务、政策法规、交易指南、路演中心、企业服务、查看风险揭示",
+          "action": "static",
+          "targetRouteId": null,
+          "apiId": null,
+          "status": "confirmed",
+          "evidence": [
+            ".stitch/designs/equity-trading-home.html: buttons and href=#",
+            "user requirement: 没有对应 UI 的入口当前不响应点击"
+          ]
+        },
+        {
+          "id": "home-dynamics-tabs",
+          "trigger": "click",
+          "element": "中心公告、信息披露、政策资讯",
+          "action": "switch-tab",
+          "targetRouteId": null,
+          "apiId": "api-home",
+          "status": "confirmed",
+          "evidence": [
+            ".stitch/designs/equity-trading-home.html: buttons=中心公告|信息披露|政策资讯",
+            "user requirement: Java backend may provide mock data"
+          ]
+        },
+        {
+          "id": "home-featured-project-card",
+          "trigger": "click",
+          "element": "精选融资项目卡片",
+          "action": "static",
+          "targetRouteId": null,
+          "apiId": null,
+          "status": "confirmed",
+          "evidence": [
+            "user requirement: 项目详情页 UI 尚未生成，当前阶段不实现卡片跳转"
+          ]
+        },
+        {
+          "id": "home-bottom-navigation",
+          "trigger": "click",
+          "element": "首页、市场、项目、我的",
+          "action": "navigate",
+          "targetRouteId": null,
+          "apiId": null,
+          "status": "confirmed",
+          "evidence": [
+            ".stitch/designs/equity-trading-home.html: nav href=#",
+            "user requirement: confirmed four uni-app page names"
+          ]
+        },
+        {
+          "id": "home-service-navigation",
+          "trigger": "click",
+          "element": "服务",
+          "action": "static",
+          "targetRouteId": null,
+          "apiId": null,
+          "status": "confirmed",
+          "evidence": [
+            "user requirement: 服务暂时不开发，后续补 UI"
+          ]
+        }
+      ],
+      "dataRequirements": [
+        {
+          "id": "home-market-metrics",
+          "description": "挂牌企业数、本月新增数、累计融资金额和更新时间。",
+          "sourceType": "api",
+          "apiId": "api-home",
+          "fieldBindings": {
+            "listedCompanyCount": "data.marketOverview.listedCompanyCount",
+            "monthlyNewCount": "data.marketOverview.monthlyNewCount",
+            "totalFinancingAmount": "data.marketOverview.totalFinancingAmount",
+            "updatedAt": "data.marketOverview.updatedAt"
+          },
+          "status": "confirmed",
+          "evidence": [
+            ".stitch/designs/equity-trading-home.html: section=市场概览"
+          ]
+        },
+        {
+          "id": "home-featured-project-list",
+          "description": "精选融资项目列表及项目展示字段。",
+          "sourceType": "api",
+          "apiId": "api-home",
+          "fieldBindings": {
+            "items": "data.featuredProjects"
+          },
+          "status": "confirmed",
+          "evidence": [
+            ".stitch/designs/equity-trading-home.html: section=精选融资项目"
+          ]
+        },
+        {
+          "id": "home-dynamics-list",
+          "description": "公告、披露和政策资讯列表。",
+          "sourceType": "api",
+          "apiId": "api-home",
+          "fieldBindings": {
+            "announcements": "data.news.announcements",
+            "disclosures": "data.news.disclosures",
+            "policies": "data.news.policies"
+          },
+          "status": "confirmed",
+          "evidence": [
+            ".stitch/designs/equity-trading-home.html: section=Market Dynamics"
+          ]
+        }
+      ],
+      "states": {
+        "loading": "统一公共 loading 状态组件。",
+        "empty": "统一公共 empty 状态组件。",
+        "error": "统一公共 error 状态组件。",
+        "success": "按 Stitch HTML 展示首页正常状态。"
+      }
+    },
+    {
+      "screenId": "5859c2f9b69546d5b39a87ff9cd6d648",
+      "name": "市场",
+      "deviceType": "MOBILE",
+      "sourceHtml": ".stitch/designs/equity-trading-market.html",
+      "screenshot": ".stitch/designs/equity-trading-market.png",
+      "sourceFingerprint": "sha256:f91a5d37051ab899ae7f8cbe82d8b5c60ce0131b7bacefdee622edb7f8177c99",
+      "routeId": "route-market",
+      "purpose": "查询挂牌企业并按行业、地区、企业层级和挂牌时间浏览市场信息。",
+      "sections": [
+        {
+          "id": "market-header-search",
+          "name": "标题与企业搜索",
+          "description": "展示市场标题，支持按企业简称或挂牌代码搜索并打开筛选。",
+          "evidence": [
+            ".stitch/designs/equity-trading-market.html: input placeholder=搜索企业简称、挂牌代码"
+          ]
+        },
+        {
+          "id": "market-overview",
+          "name": "市场概览",
+          "description": "展示挂牌企业、本周新增、今日披露和市场报告入口。",
+          "evidence": [
+            ".stitch/designs/equity-trading-market.html: heading=市场概览"
+          ]
+        },
+        {
+          "id": "market-filters",
+          "name": "分类与筛选",
+          "description": "支持行业分类、地区、企业层级和最新挂牌排序。",
+          "evidence": [
+            ".stitch/designs/equity-trading-market.html: labels=先进制造|数字经济|生物医药|消费服务|绿色能源|全部地区|企业层级|最新挂牌"
+          ]
+        },
+        {
+          "id": "market-company-list",
+          "name": "挂牌企业列表",
+          "description": "展示企业简称、挂牌代码、行业、地区、层级和最新披露日期。",
+          "evidence": [
+            ".stitch/designs/equity-trading-market.html: section=Listed Companies Cards"
+          ]
+        },
+        {
+          "id": "market-footer-navigation",
+          "name": "信息提示与底部导航",
+          "description": "展示披露信息提示、信息披露入口和五项底部导航。",
+          "evidence": [
+            ".stitch/designs/equity-trading-market.html: text=挂牌信息以企业最新披露文件为准"
+          ]
+        }
+      ],
+      "interactions": [
+        {
+          "id": "market-company-search",
+          "trigger": "submit",
+          "element": "搜索企业简称、挂牌代码",
+          "action": "search",
+          "targetRouteId": null,
+          "apiId": "api-market",
+          "status": "confirmed",
+          "evidence": [
+            ".stitch/designs/equity-trading-market.html: search input and filter button"
+          ]
+        },
+        {
+          "id": "market-filter-and-sort",
+          "trigger": "click",
+          "element": "行业分类、全部地区、企业层级、最新挂牌",
+          "action": "filter",
+          "targetRouteId": null,
+          "apiId": "api-market",
+          "status": "confirmed",
+          "evidence": [
+            ".stitch/designs/equity-trading-market.html: category and filter controls"
+          ]
+        },
+        {
+          "id": "market-company-detail",
+          "trigger": "click",
+          "element": "挂牌企业卡片",
+          "action": "static",
+          "targetRouteId": null,
+          "apiId": null,
+          "status": "confirmed",
+          "evidence": [
+            ".stitch/designs/equity-trading-market.html: company card href=#",
+            "user requirement: 没有对应 UI 的入口当前不响应点击"
+          ]
+        },
+        {
+          "id": "market-report-and-disclosure",
+          "trigger": "click",
+          "element": "查看市场报告、查看信息披露",
+          "action": "static",
+          "targetRouteId": null,
+          "apiId": null,
+          "status": "confirmed",
+          "evidence": [
+            ".stitch/designs/equity-trading-market.html: href=#",
+            "user requirement: 没有对应 UI 的入口当前不响应点击"
+          ]
+        },
+        {
+          "id": "market-bottom-navigation",
+          "trigger": "click",
+          "element": "首页、市场、项目、我的",
+          "action": "navigate",
+          "targetRouteId": null,
+          "apiId": null,
+          "status": "confirmed",
+          "evidence": [
+            ".stitch/designs/equity-trading-market.html: BottomNavBar buttons",
+            "user requirement: confirmed four uni-app page names"
+          ]
+        },
+        {
+          "id": "market-service-navigation",
+          "trigger": "click",
+          "element": "服务",
+          "action": "static",
+          "targetRouteId": null,
+          "apiId": null,
+          "status": "confirmed",
+          "evidence": [
+            "user requirement: 服务暂时不开发，后续补 UI"
+          ]
+        }
+      ],
+      "dataRequirements": [
+        {
+          "id": "market-overview-metrics",
+          "description": "挂牌企业、本周新增、今日披露和更新时间。",
+          "sourceType": "api",
+          "apiId": "api-market",
+          "fieldBindings": {
+            "listedCompanyCount": "data.overview.listedCompanyCount",
+            "weeklyNewCount": "data.overview.weeklyNewCount",
+            "todayDisclosureCount": "data.overview.todayDisclosureCount",
+            "updatedAt": "data.overview.updatedAt"
+          },
+          "status": "confirmed",
+          "evidence": [
+            ".stitch/designs/equity-trading-market.html: section=市场概览"
+          ]
+        },
+        {
+          "id": "market-company-list-data",
+          "description": "挂牌企业列表、筛选项、总数和分页或加载规则。",
+          "sourceType": "api",
+          "apiId": "api-market",
+          "fieldBindings": {
+            "items": "data.items",
+            "total": "data.total",
+            "page": "data.page",
+            "size": "data.size"
+          },
+          "status": "confirmed",
+          "evidence": [
+            ".stitch/designs/equity-trading-market.html: section=Listed Companies Cards"
+          ]
+        }
+      ],
+      "states": {
+        "loading": "统一公共 loading 状态组件。",
+        "empty": "统一公共 empty 状态组件。",
+        "error": "统一公共 error 状态组件。",
+        "success": "按 Stitch HTML 展示市场列表正常状态。"
+      }
+    },
+    {
+      "screenId": "93ed74155c7242baad7a03c641f6d658",
+      "name": "项目",
+      "deviceType": "MOBILE",
+      "sourceHtml": ".stitch/designs/equity-trading-projects.html",
+      "screenshot": ".stitch/designs/equity-trading-projects.png",
+      "sourceFingerprint": "sha256:3302e94002cab3138bb21cf717aed44585869f7dd8d3590e5352cd9298bc0696",
+      "routeId": "route-projects",
+      "purpose": "浏览融资项目，按状态、行业、地区、融资规模和发布时间筛选并进入项目详情。",
+      "sections": [
+        {
+          "id": "projects-header-search-tabs",
+          "name": "标题、搜索与状态标签",
+          "description": "展示融资项目标题、搜索、通知以及全部、募集中、路演中、已结束标签。",
+          "evidence": [
+            ".stitch/designs/equity-trading-projects.html: input placeholder=搜索项目或企业",
+            ".stitch/designs/equity-trading-projects.html: labels=全部|募集中|路演中|已结束"
+          ]
+        },
+        {
+          "id": "projects-featured",
+          "name": "精选融资专场",
+          "description": "展示本周精选专场、项目数量和专场入口。",
+          "evidence": [
+            ".stitch/designs/equity-trading-projects.html: text=专精特新企业融资专场"
+          ]
+        },
+        {
+          "id": "projects-filters",
+          "name": "项目筛选",
+          "description": "支持行业、地区、融资规模和最新发布排序。",
+          "evidence": [
+            ".stitch/designs/equity-trading-projects.html: labels=行业|地区|融资规模|最新发布"
+          ]
+        },
+        {
+          "id": "projects-list",
+          "name": "融资项目列表",
+          "description": "展示项目状态、行业、地区、融资金额、认证披露标记和意向或路演信息。",
+          "evidence": [
+            ".stitch/designs/equity-trading-projects.html: section=Project List"
+          ]
+        },
+        {
+          "id": "projects-risk-navigation",
+          "name": "风险提示与底部导航",
+          "description": "展示投资风险提示和五项底部导航。",
+          "evidence": [
+            ".stitch/designs/equity-trading-projects.html: text=项目展示不构成投资建议",
+            ".stitch/designs/equity-trading-projects.html: section=Bottom Navigation Bar"
+          ]
+        }
+      ],
+      "interactions": [
+        {
+          "id": "projects-search",
+          "trigger": "submit",
+          "element": "搜索项目或企业",
+          "action": "search",
+          "targetRouteId": null,
+          "apiId": "api-projects",
+          "status": "confirmed",
+          "evidence": [
+            ".stitch/designs/equity-trading-projects.html: search input"
+          ]
+        },
+        {
+          "id": "projects-status-filter",
+          "trigger": "click",
+          "element": "全部、募集中、路演中、已结束",
+          "action": "switch-tab",
+          "targetRouteId": null,
+          "apiId": "api-projects",
+          "status": "confirmed",
+          "evidence": [
+            ".stitch/designs/equity-trading-projects.html: section=Status Tabs"
+          ]
+        },
+        {
+          "id": "projects-filter-and-sort",
+          "trigger": "click",
+          "element": "行业、地区、融资规模、最新发布",
+          "action": "filter",
+          "targetRouteId": null,
+          "apiId": "api-projects",
+          "status": "confirmed",
+          "evidence": [
+            ".stitch/designs/equity-trading-projects.html: section=Filter Bar"
+          ]
+        },
+        {
+          "id": "projects-secondary-actions",
+          "trigger": "click",
+          "element": "查看专场、查看风险揭示、消息通知",
+          "action": "static",
+          "targetRouteId": null,
+          "apiId": null,
+          "status": "confirmed",
+          "evidence": [
+            ".stitch/designs/equity-trading-projects.html: buttons and href=#",
+            "user requirement: 没有对应 UI 的入口当前不响应点击"
+          ]
+        },
+        {
+          "id": "projects-detail-action",
+          "trigger": "click",
+          "element": "查看详情",
+          "action": "static",
+          "targetRouteId": null,
+          "apiId": null,
+          "status": "confirmed",
+          "evidence": [
+            "user requirement: 项目详情页 UI 尚未生成，当前阶段不实现详情跳转"
+          ]
+        },
+        {
+          "id": "projects-bottom-navigation",
+          "trigger": "click",
+          "element": "首页、市场、项目、我的",
+          "action": "navigate",
+          "targetRouteId": null,
+          "apiId": null,
+          "status": "confirmed",
+          "evidence": [
+            ".stitch/designs/equity-trading-projects.html: navigation items rendered as clickable divs",
+            "user requirement: confirmed four uni-app page names"
+          ]
+        },
+        {
+          "id": "projects-service-navigation",
+          "trigger": "click",
+          "element": "服务",
+          "action": "static",
+          "targetRouteId": null,
+          "apiId": null,
+          "status": "confirmed",
+          "evidence": [
+            "user requirement: 服务暂时不开发，后续补 UI"
+          ]
+        }
+      ],
+      "dataRequirements": [
+        {
+          "id": "projects-status-counts",
+          "description": "项目总数和各状态项目数量。",
+          "sourceType": "api",
+          "apiId": "api-projects",
+          "fieldBindings": {
+            "all": "data.counts.all",
+            "fundraising": "data.counts.fundraising",
+            "roadshow": "data.counts.roadshow",
+            "ended": "data.counts.ended"
+          },
+          "status": "confirmed",
+          "evidence": [
+            ".stitch/designs/equity-trading-projects.html: labels=全部 26|募集中 18|路演中 5|已结束 3"
+          ]
+        },
+        {
+          "id": "projects-featured-campaign",
+          "description": "精选融资专场内容和项目数量。",
+          "sourceType": "api",
+          "apiId": "api-projects",
+          "fieldBindings": {
+            "campaign": "data.featuredCampaign"
+          },
+          "status": "confirmed",
+          "evidence": [
+            ".stitch/designs/equity-trading-projects.html: section=Featured Banner"
+          ]
+        },
+        {
+          "id": "projects-list-data",
+          "description": "融资项目列表、筛选项、状态、融资金额、认证披露和意向或路演字段。",
+          "sourceType": "api",
+          "apiId": "api-projects",
+          "fieldBindings": {
+            "items": "data.items",
+            "total": "data.total",
+            "page": "data.page",
+            "size": "data.size"
+          },
+          "status": "confirmed",
+          "evidence": [
+            ".stitch/designs/equity-trading-projects.html: section=Project List"
+          ]
+        }
+      ],
+      "states": {
+        "loading": "统一公共 loading 状态组件。",
+        "empty": "统一公共 empty 状态组件。",
+        "error": "统一公共 error 状态组件。",
+        "success": "按 Stitch HTML 展示融资项目列表正常状态。"
+      }
+    },
+    {
+      "screenId": "6655fb46dafc464c823131839fc7b94a",
+      "name": "我的",
+      "deviceType": "MOBILE",
+      "sourceHtml": ".stitch/designs/equity-trading-profile.html",
+      "screenshot": ".stitch/designs/equity-trading-profile.png",
+      "sourceFingerprint": "sha256:21808cb5d5e09a2a8320d94b2f57ea4dc9a36cb61992d0b253846babf8225b6b",
+      "routeId": "route-profile",
+      "purpose": "展示当前用户资料、投资者认证、关注收藏、业务申请和帮助合规入口。",
+      "sections": [
+        {
+          "id": "profile-header-identity",
+          "name": "标题与用户身份",
+          "description": "展示消息入口、头像、姓名、脱敏手机号、投资者认证和个人资料设置入口。",
+          "evidence": [
+            ".stitch/designs/equity-trading-profile.html: text=合格投资者认证 · 已完成"
+          ]
+        },
+        {
+          "id": "profile-overview",
+          "name": "用户数据概览",
+          "description": "展示关注企业、收藏项目和业务申请数量。",
+          "evidence": [
+            ".stitch/designs/equity-trading-profile.html: section=Data Overview"
+          ]
+        },
+        {
+          "id": "profile-common-services",
+          "name": "常用服务",
+          "description": "展示我的关注、项目收藏、浏览记录和路演预约入口。",
+          "evidence": [
+            ".stitch/designs/equity-trading-profile.html: heading=常用服务"
+          ]
+        },
+        {
+          "id": "profile-account-services",
+          "name": "账户、企业与合规服务",
+          "description": "展示认证评估、资料消息、企业申请、融资披露、客服指南和合规入口。",
+          "evidence": [
+            ".stitch/designs/equity-trading-profile.html: headings=账户与认证|企业服务|帮助与合规"
+          ]
+        },
+        {
+          "id": "profile-bottom-navigation",
+          "name": "底部导航",
+          "description": "展示首页、市场、项目、服务、我的五项导航。",
+          "evidence": [
+            ".stitch/designs/equity-trading-profile.html: section=BottomNavBar"
+          ]
+        }
+      ],
+      "interactions": [
+        {
+          "id": "profile-header-actions",
+          "trigger": "click",
+          "element": "消息、查看个人资料、设置",
+          "action": "static",
+          "targetRouteId": null,
+          "apiId": null,
+          "status": "confirmed",
+          "evidence": [
+            ".stitch/designs/equity-trading-profile.html: header and identity card buttons",
+            "user requirement: 没有对应 UI 的入口当前不响应点击"
+          ]
+        },
+        {
+          "id": "profile-common-service-actions",
+          "trigger": "click",
+          "element": "我的关注、项目收藏、浏览记录、路演预约",
+          "action": "static",
+          "targetRouteId": null,
+          "apiId": null,
+          "status": "confirmed",
+          "evidence": [
+            ".stitch/designs/equity-trading-profile.html: section=Function Grid",
+            "user requirement: 没有对应 UI 的入口当前不响应点击"
+          ]
+        },
+        {
+          "id": "profile-account-and-business-actions",
+          "trigger": "click",
+          "element": "实名认证、适当性评估、资料管理、消息通知、我的企业、挂牌业务申请、融资申请、披露材料",
+          "action": "static",
+          "targetRouteId": null,
+          "apiId": null,
+          "status": "confirmed",
+          "evidence": [
+            ".stitch/designs/equity-trading-profile.html: grouped links href=#",
+            "user requirement: 没有对应 UI 的入口当前不响应点击"
+          ]
+        },
+        {
+          "id": "profile-help-actions",
+          "trigger": "click",
+          "element": "在线客服、业务办理指南、意见反馈、关于平台、风险揭示、账号与安全",
+          "action": "static",
+          "targetRouteId": null,
+          "apiId": null,
+          "status": "confirmed",
+          "evidence": [
+            ".stitch/designs/equity-trading-profile.html: section=帮助与合规",
+            "user requirement: 没有对应 UI 的入口当前不响应点击"
+          ]
+        },
+        {
+          "id": "profile-bottom-navigation-action",
+          "trigger": "click",
+          "element": "首页、市场、项目、我的",
+          "action": "navigate",
+          "targetRouteId": null,
+          "apiId": null,
+          "status": "confirmed",
+          "evidence": [
+            ".stitch/designs/equity-trading-profile.html: nav href=#",
+            "user requirement: confirmed four uni-app page names"
+          ]
+        },
+        {
+          "id": "profile-service-navigation",
+          "trigger": "click",
+          "element": "服务",
+          "action": "static",
+          "targetRouteId": null,
+          "apiId": null,
+          "status": "confirmed",
+          "evidence": [
+            "user requirement: 服务暂时不开发，后续补 UI"
+          ]
+        }
+      ],
+      "dataRequirements": [
+        {
+          "id": "profile-user-identity",
+          "description": "用户头像、姓名、脱敏手机号和合格投资者认证状态。",
+          "sourceType": "api",
+          "apiId": "api-profile",
+          "fieldBindings": {
+            "user": "data.user"
+          },
+          "status": "confirmed",
+          "evidence": [
+            ".stitch/designs/equity-trading-profile.html: section=User Identity Card"
+          ]
+        },
+        {
+          "id": "profile-overview-counts",
+          "description": "关注企业、收藏项目和业务申请数量。",
+          "sourceType": "api",
+          "apiId": "api-profile",
+          "fieldBindings": {
+            "followedCompanyCount": "data.counts.followedCompanyCount",
+            "favoriteProjectCount": "data.counts.favoriteProjectCount",
+            "businessApplicationCount": "data.counts.businessApplicationCount"
+          },
+          "status": "confirmed",
+          "evidence": [
+            ".stitch/designs/equity-trading-profile.html: section=Data Overview"
+          ]
+        },
+        {
+          "id": "profile-account-statuses",
+          "description": "实名认证、适当性评估、申请审核和草稿数量等账户业务状态。",
+          "sourceType": "api",
+          "apiId": "api-profile",
+          "fieldBindings": {
+            "accountStatuses": "data.accountStatuses",
+            "notificationUnread": "data.notificationUnread"
+          },
+          "status": "confirmed",
+          "evidence": [
+            ".stitch/designs/equity-trading-profile.html: labels=已完成|有效期至 2027-05-20|审核中|草稿 1"
+          ]
+        }
+      ],
+      "states": {
+        "loading": "统一公共 loading 状态组件。",
+        "empty": "统一公共 empty 状态组件。",
+        "error": "统一公共 error 状态组件。",
+        "success": "按 Stitch HTML 展示已登录且已认证用户的正常状态。"
+      }
+    }
+  ],
+  "apiContracts": [
+    {
+      "id": "api-home",
+      "method": "GET",
+      "path": "/api/v1/home",
+      "request": {
+        "query": {},
+        "path": {},
+        "body": null
+      },
+      "response": {
+        "type": "object",
+        "fields": {
+          "code": "integer",
+          "message": "string",
+          "data": {
+            "marketOverview": {
+              "listedCompanyCount": "integer",
+              "monthlyNewCount": "integer",
+              "totalFinancingAmount": "number",
+              "totalFinancingUnit": "string",
+              "updatedAt": "string"
+            },
+            "featuredProjects": [
+              {
+                "id": "string",
+                "name": "string",
+                "industry": "string",
+                "badges": "string[]",
+                "financingAmount": "number",
+                "financingUnit": "string",
+                "region": "string"
+              }
+            ],
+            "news": {
+              "announcements": "NewsItem[]",
+              "disclosures": "NewsItem[]",
+              "policies": "NewsItem[]",
+              "NewsItem": {
+                "id": "string",
+                "type": "string",
+                "title": "string",
+                "publishedAt": "string"
+              }
+            }
+          }
+        }
+      },
+      "usedBy": [
+        "home-market-metrics",
+        "home-featured-project-list",
+        "home-dynamics-list",
+        "home-dynamics-tabs"
+      ],
+      "status": "confirmed",
+      "evidence": [
+        "user requirement: Java backend may provide mock data",
+        ".stitch/designs/equity-trading-home.html: market overview, featured projects and news sections"
+      ]
+    },
+    {
+      "id": "api-market",
+      "method": "GET",
+      "path": "/api/v1/market",
+      "request": {
+        "query": {
+          "keyword": "string optional",
+          "industry": "string optional",
+          "region": "string optional",
+          "companyLevel": "string optional",
+          "sort": "LATEST_LISTING_DESC optional",
+          "page": "integer optional default 1",
+          "size": "integer optional default 20"
+        },
+        "path": {},
+        "body": null
+      },
+      "response": {
+        "type": "object",
+        "fields": {
+          "code": "integer",
+          "message": "string",
+          "data": {
+            "overview": {
+              "listedCompanyCount": "integer",
+              "weeklyNewCount": "integer",
+              "todayDisclosureCount": "integer",
+              "updatedAt": "string"
+            },
+            "total": "integer",
+            "page": "integer",
+            "size": "integer",
+            "items": [
+              {
+                "id": "string",
+                "shortName": "string",
+                "listingCode": "string",
+                "listingStatus": "string",
+                "industry": "string",
+                "region": "string",
+                "companyLevel": "string",
+                "latestDisclosureDate": "string"
+              }
+            ]
+          }
+        }
+      },
+      "usedBy": [
+        "market-company-search",
+        "market-filter-and-sort",
+        "market-overview-metrics",
+        "market-company-list-data"
+      ],
+      "status": "confirmed",
+      "evidence": [
+        "user requirement: Java backend may provide mock data",
+        ".stitch/designs/equity-trading-market.html: overview, filters and listed company cards"
+      ]
+    },
+    {
+      "id": "api-projects",
+      "method": "GET",
+      "path": "/api/v1/projects",
+      "request": {
+        "query": {
+          "keyword": "string optional",
+          "status": "ALL|FUNDRAISING|ROADSHOW|ENDED optional",
+          "industry": "string optional",
+          "region": "string optional",
+          "financingScale": "string optional",
+          "sort": "LATEST_PUBLISHED_DESC optional",
+          "page": "integer optional default 1",
+          "size": "integer optional default 20"
+        },
+        "path": {},
+        "body": null
+      },
+      "response": {
+        "type": "object",
+        "fields": {
+          "code": "integer",
+          "message": "string",
+          "data": {
+            "counts": {
+              "all": "integer",
+              "fundraising": "integer",
+              "roadshow": "integer",
+              "ended": "integer"
+            },
+            "featuredCampaign": {
+              "id": "string",
+              "title": "string",
+              "projectCount": "integer"
+            },
+            "total": "integer",
+            "page": "integer",
+            "size": "integer",
+            "items": [
+              {
+                "id": "string",
+                "title": "string",
+                "status": "FUNDRAISING|ROADSHOW|ENDED",
+                "industry": "string",
+                "region": "string",
+                "financingAmount": "number",
+                "financingUnit": "string",
+                "tags": "string[]",
+                "intentCount": "integer|null",
+                "nextRoadshowAt": "string|null"
+              }
+            ]
+          }
+        }
+      },
+      "usedBy": [
+        "projects-search",
+        "projects-status-filter",
+        "projects-filter-and-sort",
+        "projects-status-counts",
+        "projects-featured-campaign",
+        "projects-list-data"
+      ],
+      "status": "confirmed",
+      "evidence": [
+        "user requirement: Java backend may provide mock data",
+        ".stitch/designs/equity-trading-projects.html: status counts, featured campaign, filters and project cards"
+      ]
+    },
+    {
+      "id": "api-profile",
+      "method": "GET",
+      "path": "/api/v1/profile",
+      "request": {
+        "query": {},
+        "path": {},
+        "body": null
+      },
+      "response": {
+        "type": "object",
+        "fields": {
+          "code": "integer",
+          "message": "string",
+          "data": {
+            "user": {
+              "id": "string",
+              "avatarUrl": "string",
+              "displayName": "string",
+              "maskedMobile": "string",
+              "qualifiedInvestorStatus": "string"
+            },
+            "counts": {
+              "followedCompanyCount": "integer",
+              "favoriteProjectCount": "integer",
+              "businessApplicationCount": "integer"
+            },
+            "accountStatuses": {
+              "realNameStatus": "string",
+              "suitabilityValidUntil": "string|null",
+              "listingApplicationStatus": "string|null",
+              "financingDraftCount": "integer"
+            },
+            "notificationUnread": "boolean"
+          }
+        }
+      },
+      "usedBy": [
+        "profile-user-identity",
+        "profile-overview-counts",
+        "profile-account-statuses"
+      ],
+      "status": "confirmed",
+      "evidence": [
+        "user requirement: Java backend may provide mock data",
+        ".stitch/designs/equity-trading-profile.html: user identity, overview counts and account statuses"
+      ]
+    }
+  ],
+  "unresolved": [
+    {
+      "id": "missing-service-screen",
+      "severity": "warning",
+      "screenId": null,
+      "category": "missing-screen",
+      "question": "服务页已明确延期，当前底部导航保留视觉项但不执行跳转，待后续补充 Stitch UI 后再启用。",
+      "evidence": [
+        ".stitch/DESIGN.md: bottom navigation=首页|市场|项目|服务|我的",
+        ".stitch/metadata.json: screens contains no 服务 screen",
+        "user requirement: 服务暂时不开发，后续补 UI"
+      ]
+    },
+    {
+      "id": "primary-color-conflict",
+      "severity": "warning",
+      "screenId": null,
+      "category": "conflict",
+      "question": "DESIGN.md 和 metadata.json 的主色为 #0B4F8A，而四个 HTML 的 Tailwind primary 为 #003866；当前契约暂以 DESIGN.md 为视觉事实来源。",
+      "evidence": [
+        ".stitch/DESIGN.md: primary=#0B4F8A",
+        ".stitch/metadata.json: designSystem.primaryColor=#0B4F8A",
+        ".stitch/designs/*.html: Tailwind primary=#003866"
+      ]
+    }
+  ]
+}

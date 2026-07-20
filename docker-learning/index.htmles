@@ -1,0 +1,10 @@
+<!doctype html>
+  <html lang="zh-CN">
+    <head>
+      <meta charset="UTF-8">
+      <title>Docker 学习</title>
+    </head>
+    <body>
+      <h1>这是我自己构建的 Docker 镜像</h1>
+    </body>
+  </html>

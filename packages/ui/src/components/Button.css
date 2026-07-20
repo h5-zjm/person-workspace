@@ -1,0 +1,104 @@
+.ui-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ui-space-2);
+  min-height: 36px;
+  padding: 0 var(--ui-space-4);
+  border: 1px solid var(--ui-color-border);
+  border-radius: var(--ui-radius-md);
+  font: inherit;
+  font-size: var(--ui-font-size-sm);
+  font-weight: 600;
+  line-height: var(--ui-line-height-tight);
+  cursor: pointer;
+  transition:
+    background-color var(--ui-duration-fast) ease,
+    border-color var(--ui-duration-fast) ease,
+    color var(--ui-duration-fast) ease,
+    box-shadow var(--ui-duration-fast) ease;
+}
+
+.ui-button:focus-visible {
+  outline: 2px solid var(--ui-color-focus);
+  outline-offset: 2px;
+}
+
+.ui-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.58;
+}
+
+.ui-button--sm {
+  min-height: 32px;
+  padding: 0 var(--ui-space-3);
+  font-size: var(--ui-font-size-xs);
+}
+
+.ui-button--md {
+  min-height: 36px;
+}
+
+.ui-button--lg {
+  min-height: 44px;
+  padding: 0 var(--ui-space-5);
+  font-size: var(--ui-font-size-md);
+}
+
+.ui-button--full {
+  width: 100%;
+}
+
+.ui-button--primary {
+  border-color: var(--ui-color-primary);
+  background: var(--ui-color-primary);
+  color: var(--ui-color-surface);
+}
+
+.ui-button--primary:hover:not(:disabled) {
+  border-color: var(--ui-color-primary-hover);
+  background: var(--ui-color-primary-hover);
+}
+
+.ui-button--secondary {
+  border-color: var(--ui-color-border);
+  background: var(--ui-color-surface);
+  color: var(--ui-color-text);
+}
+
+.ui-button--secondary:hover:not(:disabled) {
+  border-color: var(--ui-color-border-strong);
+  background: var(--ui-color-surface-muted);
+}
+
+.ui-button--ghost {
+  border-color: var(--ui-color-surface);
+  background: var(--ui-color-surface);
+  color: var(--ui-color-primary);
+}
+
+.ui-button--ghost:hover:not(:disabled) {
+  background: var(--ui-color-primary-soft);
+}
+
+.ui-button--success {
+  border-color: var(--ui-color-success);
+  background: var(--ui-color-success);
+  color: var(--ui-color-surface);
+}
+
+.ui-button--success:hover:not(:disabled) {
+  border-color: var(--ui-color-success-hover);
+  background: var(--ui-color-success-hover);
+}
+
+.ui-button--danger {
+  border-color: var(--ui-color-danger);
+  background: var(--ui-color-danger);
+  color: var(--ui-color-surface);
+}
+
+.ui-button--danger:hover:not(:disabled) {
+  border-color: var(--ui-color-danger-hover);
+  background: var(--ui-color-danger-hover);
+}

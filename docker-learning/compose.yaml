@@ -1,0 +1,8 @@
+services:
+    web:
+      build:
+        context: .
+      image: learning-web:1.0
+      ports:
+        - "18080:80"
+      restart: unless-stopped

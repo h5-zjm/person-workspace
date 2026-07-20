@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/>
+<title>我的 - 区域性股权交易中心</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@600;700&amp;family=Noto+Sans+SC:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "tertiary": "#003f38",
+                        "inverse-surface": "#25323f",
+                        "primary-fixed-dim": "#a2c9ff",
+                        "on-error-container": "#93000a",
+                        "on-primary": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "on-secondary-fixed": "#291800",
+                        "on-primary-fixed-variant": "#004881",
+                        "surface-dim": "#cedbec",
+                        "background": "#F5F7FA",
+                        "outline-variant": "#c2c7d1",
+                        "secondary-container": "#feba54",
+                        "on-tertiary": "#ffffff",
+                        "surface-container-low": "#edf4ff",
+                        "surface-container": "#e3efff",
+                        "primary": "#003866",
+                        "surface": "#f7f9ff",
+                        "surface-container-lowest": "#ffffff",
+                        "inverse-primary": "#a2c9ff",
+                        "on-background": "#101d29",
+                        "tertiary-fixed": "#97f3e4",
+                        "surface-bright": "#f7f9ff",
+                        "on-secondary-fixed-variant": "#633f00",
+                        "surface-container-high": "#dce9fb",
+                        "surface-white": "#FFFFFF",
+                        "primary-fixed": "#d3e4ff",
+                        "error": "#ba1a1a",
+                        "on-surface-variant": "#424750",
+                        "inverse-on-surface": "#e8f2ff",
+                        "on-error": "#ffffff",
+                        "primary-container": "#0b4f8a",
+                        "surface-tint": "#27609c",
+                        "secondary-fixed-dim": "#feba54",
+                        "on-tertiary-container": "#74cfc1",
+                        "on-tertiary-fixed": "#00201c",
+                        "success-green": "#0C7C70",
+                        "on-tertiary-fixed-variant": "#005048",
+                        "surface-container-highest": "#d6e4f5",
+                        "on-secondary-container": "#724a00",
+                        "tertiary-fixed-dim": "#7bd6c8",
+                        "error-red": "#C43D3D",
+                        "outline": "#727781",
+                        "on-surface": "#101d29",
+                        "secondary-fixed": "#ffddb3",
+                        "secondary": "#825500",
+                        "tertiary-container": "#00584f",
+                        "on-primary-fixed": "#001c38",
+                        "on-secondary": "#ffffff",
+                        "surface-variant": "#d6e4f5",
+                        "on-primary-container": "#94c2ff",
+                        "border-subtle": "#D7DEE6"
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.25rem",
+                        lg: "0.5rem",
+                        xl: "0.75rem",
+                        full: "9999px"
+                    },
+                    spacing: {
+                        "page-margin": "16px",
+                        "card-padding": "16px",
+                        "stack-gap-sm": "8px",
+                        "section-gap": "24px",
+                        "base": "8px",
+                        "stack-gap-md": "12px"
+                    },
+                    fontFamily: {
+                        "number-md": ["Inter"],
+                        "label-sm": ["Noto Sans SC"],
+                        "headline-lg": ["Noto Sans SC"],
+                        "body-base": ["Noto Sans SC"],
+                        "headline-md": ["Noto Sans SC"],
+                        "number-lg": ["Inter"],
+                        "display-lg": ["Noto Sans SC"]
+                    },
+                    fontSize: {
+                        "number-md": ["18px", { lineHeight: "24px", fontWeight: "600" }],
+                        "label-sm": ["12px", { lineHeight: "18px", fontWeight: "500" }],
+                        "headline-lg": ["22px", { lineHeight: "30px", fontWeight: "700" }],
+                        "body-base": ["15px", { lineHeight: "23px", fontWeight: "400" }],
+                        "headline-md": ["18px", { lineHeight: "26px", fontWeight: "600" }],
+                        "number-lg": ["24px", { lineHeight: "30px", fontWeight: "700" }],
+                        "display-lg": ["30px", { lineHeight: "40px", letterSpacing: "-0.02em", fontWeight: "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { -webkit-tap-highlight-color: transparent; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24; }
+        .pb-safe { padding-bottom: env(safe-area-inset-bottom); }
+        .pt-safe { padding-top: env(safe-area-inset-top); }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body-base antialiased w-full h-full min-h-screen">
+<!-- Top Navigation -->
+<header class="w-full sticky top-0 z-50 flex justify-between items-center px-page-margin py-base h-14 bg-surface border-b border-border-subtle pt-safe">
+<div class="flex-1"></div>
+<div class="flex-1 flex justify-center">
+<h1 class="font-headline-md text-headline-md font-bold text-primary">我的</h1>
+</div>
+<div class="flex-1 flex justify-end items-center">
+<button class="relative p-2 text-on-surface-variant hover:bg-surface-container-high rounded-full transition-colors duration-200">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-error-red rounded-full"></span>
+</button>
+<div class="w-16"></div> <!-- Capsule placeholder -->
+</div>
+</header>
+<main class="pb-24"> <!-- Bottom padding for nav bar -->
+<!-- User Identity Card -->
+<section class="px-page-margin py-section-gap">
+<div class="bg-surface-container-low rounded-xl p-card-padding border border-border-subtle flex items-center shadow-sm">
+<div class="relative">
+<img class="w-16 h-16 rounded-full object-cover border-2 border-surface-white" data-alt="Professional corporate headshot of a mature Asian male in a business suit against a neutral light grey background, soft lighting, professional modern style, high quality." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAu8XxzKD8qRNNUeo5efq_yv0FLin5AG0zchOAet6VIqEPlOcyaHOefeKcvGQfyOtUaRR7FPr0prA8wFrxBIdAgwbpHmBdK3EsgTuauQL4i-iAo3MXb26EfPFJhfcc9rE7ACca9aaSnqPatGajWxAonAiCliFFjPcG9Ym209ZWwxENMBlsVdZZmX5Q29fRH9Z8xcZBkanPS2YGAUbEeTvBmS4x2VDUBm0bc6RezKFj0NfNnMayiSZDdSHUxWKV46EQbduNbnB8GsdP_"/>
+</div>
+<div class="ml-4 flex-1">
+<div class="flex items-center space-x-2 mb-1">
+<span class="font-headline-md text-headline-md text-on-background">张先生</span>
+<span class="bg-primary text-on-primary font-label-sm text-label-sm px-2 py-0.5 rounded-full flex items-center">
+<span class="material-symbols-outlined text-[14px] mr-1" data-icon="verified">verified</span>合格投资者认证 · 已完成
+                        </span>
+</div>
+<div class="text-on-surface-variant font-label-sm text-label-sm mb-1">138****6628</div>
+<button class="text-primary font-label-sm text-label-sm hover:underline flex items-center">
+                        查看个人资料 <span class="material-symbols-outlined text-[14px] ml-0.5" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+<div>
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-highest rounded-full transition-colors">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Data Overview -->
+<section class="px-page-margin pb-section-gap">
+<div class="bg-surface-white rounded-xl p-card-padding border border-border-subtle grid grid-cols-3 divide-x divide-border-subtle shadow-sm">
+<div class="flex flex-col items-center justify-center">
+<span class="font-number-lg text-number-lg text-on-background">5</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant mt-1">关注企业</span>
+</div>
+<div class="flex flex-col items-center justify-center">
+<span class="font-number-lg text-number-lg text-on-background">3</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant mt-1">收藏项目</span>
+</div>
+<div class="flex flex-col items-center justify-center">
+<span class="font-number-lg text-number-lg text-on-background">2</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant mt-1">业务申请</span>
+</div>
+</div>
+</section>
+<!-- Function Grid -->
+<section class="px-page-margin pb-section-gap">
+<div class="bg-surface-white rounded-xl p-card-padding border border-border-subtle shadow-sm">
+<h2 class="font-headline-md text-headline-md text-on-background mb-4">常用服务</h2>
+<div class="grid grid-cols-4 gap-4">
+<button class="flex flex-col items-center group">
+<div class="w-10 h-10 rounded-full bg-surface-container-low group-hover:bg-surface-container-high transition-colors flex items-center justify-center mb-2">
+<span class="material-symbols-outlined text-primary text-[24px]" data-icon="favorite_border">favorite_border</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant truncate w-full text-center">我的关注</span>
+</button>
+<button class="flex flex-col items-center group">
+<div class="w-10 h-10 rounded-full bg-surface-container-low group-hover:bg-surface-container-high transition-colors flex items-center justify-center mb-2">
+<span class="material-symbols-outlined text-primary text-[24px]" data-icon="bookmark_border">bookmark_border</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant truncate w-full text-center">项目收藏</span>
+</button>
+<button class="flex flex-col items-center group">
+<div class="w-10 h-10 rounded-full bg-surface-container-low group-hover:bg-surface-container-high transition-colors flex items-center justify-center mb-2">
+<span class="material-symbols-outlined text-primary text-[24px]" data-icon="history">history</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant truncate w-full text-center">浏览记录</span>
+</button>
+<button class="flex flex-col items-center group relative">
+<div class="w-10 h-10 rounded-full bg-surface-container-low group-hover:bg-surface-container-high transition-colors flex items-center justify-center mb-2 relative">
+<span class="material-symbols-outlined text-primary text-[24px]" data-icon="event_upcoming">event_upcoming</span>
+<span class="absolute top-0 right-0 w-2.5 h-2.5 bg-error-red rounded-full border-2 border-surface-white"></span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant truncate w-full text-center">路演预约</span>
+</button>
+</div>
+</div>
+</section>
+<!-- List Groups -->
+<section class="px-page-margin pb-section-gap space-y-4">
+<!-- 账户与认证 -->
+<div class="bg-surface-white rounded-xl border border-border-subtle shadow-sm overflow-hidden">
+<div class="px-card-padding py-3 border-b border-border-subtle bg-surface-container-lowest">
+<h3 class="font-headline-md text-headline-md text-on-background">账户与认证</h3>
+</div>
+<div class="divide-y divide-border-subtle">
+<a class="flex items-center justify-between px-card-padding py-3 hover:bg-surface-container-lowest transition-colors" href="#">
+<div class="flex items-center">
+<span class="material-symbols-outlined text-outline mr-3" data-icon="badge">badge</span>
+<span class="text-on-background">实名认证</span>
+</div>
+<div class="flex items-center">
+<span class="font-label-sm text-label-sm text-success-green mr-2">已完成</span>
+<span class="material-symbols-outlined text-outline-variant" data-icon="chevron_right">chevron_right</span>
+</div>
+</a>
+<a class="flex items-center justify-between px-card-padding py-3 hover:bg-surface-container-lowest transition-colors" href="#">
+<div class="flex items-center">
+<span class="material-symbols-outlined text-outline mr-3" data-icon="assignment_turned_in">assignment_turned_in</span>
+<span class="text-on-background">适当性评估</span>
+</div>
+<div class="flex items-center">
+<span class="font-label-sm text-label-sm text-on-surface-variant mr-2">有效期至 2027-05-20</span>
+<span class="material-symbols-outlined text-outline-variant" data-icon="chevron_right">chevron_right</span>
+</div>
+</a>
+<a class="flex items-center justify-between px-card-padding py-3 hover:bg-surface-container-lowest transition-colors" href="#">
+<div class="flex items-center">
+<span class="material-symbols-outlined text-outline mr-3" data-icon="folder_shared">folder_shared</span>
+<span class="text-on-background">资料管理</span>
+</div>
+<span class="material-symbols-outlined text-outline-variant" data-icon="chevron_right">chevron_right</span>
+</a>
+<a class="flex items-center justify-between px-card-padding py-3 hover:bg-surface-container-lowest transition-colors" href="#">
+<div class="flex items-center">
+<span class="material-symbols-outlined text-outline mr-3" data-icon="mark_email_unread">mark_email_unread</span>
+<span class="text-on-background">消息通知</span>
+</div>
+<span class="material-symbols-outlined text-outline-variant" data-icon="chevron_right">chevron_right</span>
+</a>
+</div>
+</div>
+<!-- 企业服务 -->
+<div class="bg-surface-white rounded-xl border border-border-subtle shadow-sm overflow-hidden">
+<div class="px-card-padding py-3 border-b border-border-subtle bg-surface-container-lowest">
+<h3 class="font-headline-md text-headline-md text-on-background">企业服务</h3>
+</div>
+<div class="divide-y divide-border-subtle">
+<a class="flex items-center justify-between px-card-padding py-3 hover:bg-surface-container-lowest transition-colors" href="#">
+<div class="flex items-center">
+<span class="material-symbols-outlined text-outline mr-3" data-icon="domain">domain</span>
+<span class="text-on-background">我的企业</span>
+</div>
+<span class="material-symbols-outlined text-outline-variant" data-icon="chevron_right">chevron_right</span>
+</a>
+<a class="flex items-center justify-between px-card-padding py-3 hover:bg-surface-container-lowest transition-colors" href="#">
+<div class="flex items-center">
+<span class="material-symbols-outlined text-outline mr-3" data-icon="app_registration">app_registration</span>
+<span class="text-on-background">挂牌业务申请</span>
+</div>
+<div class="flex items-center">
+<span class="font-label-sm text-label-sm text-secondary-container mr-2">审核中</span>
+<span class="material-symbols-outlined text-outline-variant" data-icon="chevron_right">chevron_right</span>
+</div>
+</a>
+<a class="flex items-center justify-between px-card-padding py-3 hover:bg-surface-container-lowest transition-colors" href="#">
+<div class="flex items-center">
+<span class="material-symbols-outlined text-outline mr-3" data-icon="request_quote">request_quote</span>
+<span class="text-on-background">融资申请</span>
+</div>
+<div class="flex items-center">
+<span class="font-label-sm text-label-sm text-on-surface-variant mr-2">草稿 1</span>
+<span class="material-symbols-outlined text-outline-variant" data-icon="chevron_right">chevron_right</span>
+</div>
+</a>
+<a class="flex items-center justify-between px-card-padding py-3 hover:bg-surface-container-lowest transition-colors" href="#">
+<div class="flex items-center">
+<span class="material-symbols-outlined text-outline mr-3" data-icon="description">description</span>
+<span class="text-on-background">披露材料</span>
+</div>
+<span class="material-symbols-outlined text-outline-variant" data-icon="chevron_right">chevron_right</span>
+</a>
+</div>
+</div>
+<!-- 帮助与合规 -->
+<div class="bg-surface-white rounded-xl border border-border-subtle shadow-sm overflow-hidden mb-6">
+<div class="px-card-padding py-3 border-b border-border-subtle bg-surface-container-lowest">
+<h3 class="font-headline-md text-headline-md text-on-background">帮助与合规</h3>
+</div>
+<div class="divide-y divide-border-subtle">
+<a class="flex items-center justify-between px-card-padding py-3 hover:bg-surface-container-lowest transition-colors" href="#">
+<div class="flex items-center">
+<span class="material-symbols-outlined text-outline mr-3" data-icon="support_agent">support_agent</span>
+<span class="text-on-background">在线客服</span>
+</div>
+<span class="material-symbols-outlined text-outline-variant" data-icon="chevron_right">chevron_right</span>
+</a>
+<a class="flex items-center justify-between px-card-padding py-3 hover:bg-surface-container-lowest transition-colors" href="#">
+<div class="flex items-center">
+<span class="material-symbols-outlined text-outline mr-3" data-icon="menu_book">menu_book</span>
+<span class="text-on-background">业务办理指南</span>
+</div>
+<span class="material-symbols-outlined text-outline-variant" data-icon="chevron_right">chevron_right</span>
+</a>
+<a class="flex items-center justify-between px-card-padding py-3 hover:bg-surface-container-lowest transition-colors" href="#">
+<div class="flex items-center">
+<span class="material-symbols-outlined text-outline mr-3" data-icon="feedback">feedback</span>
+<span class="text-on-background">意见反馈</span>
+</div>
+<span class="material-symbols-outlined text-outline-variant" data-icon="chevron_right">chevron_right</span>
+</a>
+<a class="flex items-center justify-between px-card-padding py-3 hover:bg-surface-container-lowest transition-colors" href="#">
+<div class="flex items-center">
+<span class="material-symbols-outlined text-outline mr-3" data-icon="info">info</span>
+<span class="text-on-background">关于平台</span>
+</div>
+<span class="material-symbols-outlined text-outline-variant" data-icon="chevron_right">chevron_right</span>
+</a>
+<a class="flex items-center justify-between px-card-padding py-3 hover:bg-surface-container-lowest transition-colors" href="#">
+<div class="flex items-center">
+<span class="material-symbols-outlined text-outline mr-3" data-icon="warning">warning</span>
+<span class="text-on-background">风险揭示</span>
+</div>
+<span class="material-symbols-outlined text-outline-variant" data-icon="chevron_right">chevron_right</span>
+</a>
+</div>
+</div>
+<div class="text-center mt-6">
+<button class="text-on-surface-variant font-label-sm text-label-sm hover:text-primary transition-colors flex items-center justify-center mx-auto">
+<span class="material-symbols-outlined text-[16px] mr-1" data-icon="security">security</span>账号与安全
+                 </button>
+</div>
+</section>
+</main>
+<!-- BottomNavBar (Shared Component) -->
+<nav class="fixed bottom-0 w-full z-50 pb-safe border-t border-border-subtle bg-surface-container-lowest flex justify-around items-center h-16 w-full md:hidden">
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:opacity-80 scale-95 active:transition-transform flex-1 h-full" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="home">home</span>
+<span class="font-label-sm text-label-sm">首页</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:opacity-80 scale-95 active:transition-transform flex-1 h-full" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="analytics">analytics</span>
+<span class="font-label-sm text-label-sm">市场</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:opacity-80 scale-95 active:transition-transform flex-1 h-full" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="work">work</span>
+<span class="font-label-sm text-label-sm">项目</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:opacity-80 scale-95 active:transition-transform flex-1 h-full" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="grid_view">grid_view</span>
+<span class="font-label-sm text-label-sm">服务</span>
+</a>
+<a class="flex flex-col items-center justify-center text-primary font-bold hover:opacity-80 scale-95 active:transition-transform flex-1 h-full" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="person" data-weight="fill" style="font-variation-settings: 'FILL' 1;">person</span>
+<span class="font-label-sm text-label-sm">我的</span>
+</a>
+</nav>
+</body></html>

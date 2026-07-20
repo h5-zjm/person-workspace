@@ -1,0 +1,7 @@
+packages:
+  - "AppServer"
+  - "FrontProject"
+  - "FrontProject/wechat"
+  - "BackEnd"
+  - "apps/*"
+  - "packages/*"

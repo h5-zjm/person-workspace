@@ -1,0 +1,8 @@
+name: equity-trading
+
+services:
+  api:
+    image: crpi-3jyk23pxhy24iane.cn-hangzhou.personal.cr.aliyuncs.com/zheng20260716/equity-trading-api:0.0.1
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8080:8080"

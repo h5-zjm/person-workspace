@@ -1,0 +1,19 @@
+#!/bin/sh
+
+set -eu
+
+MAVEN_VERSION=3.9.16
+MAVEN_USER_HOME=${MAVEN_USER_HOME:-"$HOME/.m2"}
+MAVEN_HOME="$MAVEN_USER_HOME/wrapper/dists/apache-maven-$MAVEN_VERSION/apache-maven-$MAVEN_VERSION"
+MAVEN_URL="https://repo.maven.apache.org/maven2/org/apache/maven/apache-maven/$MAVEN_VERSION/apache-maven-$MAVEN_VERSION-bin.zip"
+
+if [ ! -x "$MAVEN_HOME/bin/mvn" ]; then
+  TEMP_DIR=$(mktemp -d)
+  trap 'rm -rf "$TEMP_DIR"' EXIT HUP INT TERM
+  mkdir -p "$(dirname "$MAVEN_HOME")"
+  curl -fsSL "$MAVEN_URL" -o "$TEMP_DIR/maven.zip"
+  unzip -q "$TEMP_DIR/maven.zip" -d "$TEMP_DIR"
+  mv "$TEMP_DIR/apache-maven-$MAVEN_VERSION" "$MAVEN_HOME"
+fi
+
+exec "$MAVEN_HOME/bin/mvn" "$@"

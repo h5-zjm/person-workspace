@@ -1,0 +1,32 @@
+{
+  "name": "person-workspace",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@9.15.4",
+  "bin": {
+    "equity": "./cli.mjs"
+  },
+  "scripts": {
+    "dev": "pnpm dev:front",
+    "dev:front": "pnpm --filter @person-workspace/ui build && pnpm --filter front-project dev",
+    "dev:backend": "pnpm --filter backend dev",
+    "dev:appserver": "pnpm --filter codex-bridge dev",
+    "dev:docs": "pnpm --filter @person-workspace/docs dev",
+    "build": "pnpm --filter @person-workspace/ui build && pnpm --filter backend build && pnpm --filter front-project build && pnpm --filter equity-trading-wechat build:h5 && pnpm --filter @person-workspace/docs build && pnpm --filter codex-bridge build",
+    "typecheck": "pnpm -r --sort typecheck",
+    "lint": "eslint . && node scripts/verify-design-rules.mjs",
+    "check": "pnpm lint && pnpm typecheck && pnpm build"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.30.1",
+    "@next/eslint-plugin-next": "^15.5.9",
+    "@types/node": "^22.13.14",
+    "@types/react": "^19.0.12",
+    "@types/react-dom": "^19.0.4",
+    "@vitejs/plugin-react": "^4.3.4",
+    "eslint": "^9.30.1",
+    "typescript": "^5.8.2",
+    "typescript-eslint": "^8.34.1",
+    "vite": "^6.2.5"
+  }
+}

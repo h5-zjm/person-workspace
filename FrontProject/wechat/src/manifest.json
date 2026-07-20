@@ -1,0 +1,22 @@
+{
+  "name": "股权交易中心",
+  "appid": "__UNI__EQUITY_TRADING",
+  "description": "区域性股权交易中心移动端服务",
+  "versionName": "0.1.0",
+  "versionCode": "100",
+  "transformPx": false,
+  "h5": {
+    "title": "股权交易中心",
+    "router": {
+      "mode": "hash"
+    }
+  },
+  "mp-weixin": {
+    "appid": "",
+    "setting": {
+      "urlCheck": false,
+      "minified": true
+    },
+    "usingComponents": true
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "projectId": "13326581046254934398",
+  "title": "小程序股权交易中心",
+  "screens": [
+    {
+      "screenId": "9e0821b570e24a23ba76b13628b398eb",
+      "title": "首页 - 股权交易中心",
+      "deviceType": "MOBILE",
+      "htmlFile": "designs/equity-trading-home.html",
+      "screenshotFile": "designs/equity-trading-home.png"
+    },
+    {
+      "screenId": "5859c2f9b69546d5b39a87ff9cd6d648",
+      "title": "市场 - 股权交易中心",
+      "deviceType": "MOBILE",
+      "htmlFile": "designs/equity-trading-market.html",
+      "screenshotFile": "designs/equity-trading-market.png"
+    },
+    {
+      "screenId": "93ed74155c7242baad7a03c641f6d658",
+      "title": "项目 - 股权交易中心",
+      "deviceType": "MOBILE",
+      "htmlFile": "designs/equity-trading-projects.html",
+      "screenshotFile": "designs/equity-trading-projects.png"
+    },
+    {
+      "screenId": "6655fb46dafc464c823131839fc7b94a",
+      "title": "我的 - 股权交易中心",
+      "deviceType": "MOBILE",
+      "htmlFile": "designs/equity-trading-profile.html",
+      "screenshotFile": "designs/equity-trading-profile.png"
+    }
+  ],
+  "designSystem": {
+    "assetId": "4e3dd164344d44118a84636aa7e92a2a",
+    "primaryColor": "#0B4F8A",
+    "secondaryColor": "#B47A16",
+    "backgroundColor": "#F5F7FA",
+    "fontFamily": "NOTO_SANS_SC",
+    "roundness": "ROUND_TWELVE"
+  }
+}
