@@ -5,7 +5,11 @@ on:
     branches: [main]
     paths:
       - ".github/workflows/build-images.yml"
+      - ".github/workflows/deploy-api.yml"
+      - ".github/workflows/deploy-web.yml"
       - ".dockerignore"
+      - "compose.yaml"
+      - "compose.load-balancing.yaml"
       - "JavaBackend/**"
       - "FrontProject/wechat/**"
       - "deploy/nginx.conf"
