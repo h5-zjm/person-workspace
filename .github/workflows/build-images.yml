@@ -1,0 +1,66 @@
+name: Build and push Docker images
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/build-images.yml"
+      - ".dockerignore"
+      - "JavaBackend/**"
+      - "FrontProject/wechat/**"
+      - "deploy/nginx.conf"
+      - "package.json"
+      - "pnpm-lock.yaml"
+      - "pnpm-workspace.yaml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  REGISTRY: crpi-3jyk23pxhy24iane.cn-hangzhou.personal.cr.aliyuncs.com
+  NAMESPACE: zheng20260716
+  API_IMAGE: equity-trading-api
+  WEB_IMAGE: equity-trading-web
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to ACR
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ secrets.ACR_USERNAME }}
+          password: ${{ secrets.ACR_PASSWORD }}
+
+      - name: Require H5 API endpoint
+        env:
+          VITE_API_BASE_URL: ${{ vars.VITE_API_BASE_URL }}
+        run: test -n "$VITE_API_BASE_URL"
+
+      - name: Build and push API image
+        uses: docker/build-push-action@v6
+        with:
+          context: JavaBackend
+          file: JavaBackend/Dockerfile
+          platforms: linux/amd64
+          push: true
+          tags: ${{ env.REGISTRY }}/${{ env.NAMESPACE }}/${{ env.API_IMAGE }}:${{ github.sha }}
+
+      - name: Build and push Web image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: FrontProject/wechat/Dockerfile
+          platforms: linux/amd64
+          push: true
+          build-args: VITE_API_BASE_URL=${{ vars.VITE_API_BASE_URL }}
+          tags: ${{ env.REGISTRY }}/${{ env.NAMESPACE }}/${{ env.WEB_IMAGE }}:${{ github.sha }}
