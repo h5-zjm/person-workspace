@@ -22,6 +22,8 @@ env:
   NAMESPACE: zheng20260716
   API_IMAGE: equity-trading-api
   WEB_IMAGE: equity-trading-web
+  MYSQL_IMAGE: equity-trading-mysql
+  MYSQL_IMAGE_TAG: "8.4"
 
 jobs:
   build-and-push:
@@ -45,6 +47,12 @@ jobs:
         env:
           VITE_API_BASE_URL: ${{ vars.VITE_API_BASE_URL }}
         run: test -n "$VITE_API_BASE_URL"
+
+      - name: Mirror MySQL image to ACR
+        run: |
+          docker pull --platform linux/amd64 mysql:${{ env.MYSQL_IMAGE_TAG }}
+          docker tag mysql:${{ env.MYSQL_IMAGE_TAG }} ${{ env.REGISTRY }}/${{ env.NAMESPACE }}/${{ env.MYSQL_IMAGE }}:${{ env.MYSQL_IMAGE_TAG }}
+          docker push ${{ env.REGISTRY }}/${{ env.NAMESPACE }}/${{ env.MYSQL_IMAGE }}:${{ env.MYSQL_IMAGE_TAG }}
 
       - name: Build and push API image
         uses: docker/build-push-action@v6
