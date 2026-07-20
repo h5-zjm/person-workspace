@@ -1,12 +1,9 @@
 name: Deploy API
 
 on:
-  workflow_dispatch:
-    inputs:
-      image_tag:
-        description: "40-character Git commit SHA to deploy"
-        required: true
-        type: string
+  workflow_run:
+    workflows: ["Build and push Docker images"]
+    types: [completed]
 
 permissions:
   contents: read
@@ -17,15 +14,20 @@ concurrency:
 
 jobs:
   deploy:
+    if: >-
+      github.event.workflow_run.conclusion == 'success' &&
+      github.event.workflow_run.head_branch == 'main'
     runs-on: ubuntu-latest
 
     steps:
       - name: Check out source
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
 
       - name: Validate image tag
         env:
-          IMAGE_TAG: ${{ inputs.image_tag }}
+          IMAGE_TAG: ${{ github.event.workflow_run.head_sha }}
         run: |
           if [[ ! "$IMAGE_TAG" =~ ^[0-9a-f]{40}$ ]]; then
             echo "image_tag must be a 40-character lowercase Git commit SHA" >&2
@@ -55,7 +57,7 @@ jobs:
 
       - name: Roll out API one instance at a time
         env:
-          IMAGE_TAG: ${{ inputs.image_tag }}
+          IMAGE_TAG: ${{ github.event.workflow_run.head_sha }}
           SERVER_HOST: ${{ vars.SERVER_HOST }}
           SERVER_USER: ${{ vars.SERVER_USER }}
         run: |
