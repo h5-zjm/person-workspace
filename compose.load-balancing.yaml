@@ -20,6 +20,8 @@ services:
 
   api2:
     image: crpi-3jyk23pxhy24iane.cn-hangzhou.personal.cr.aliyuncs.com/zheng20260716/equity-trading-api:${API_IMAGE_TAG:-0.0.1}
+    environment:
+      ROLLBACK_DRILL_API2: "true"
     restart: unless-stopped
     cpus: "0.75"
     mem_limit: 384m
