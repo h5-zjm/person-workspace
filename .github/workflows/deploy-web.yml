@@ -1,0 +1,68 @@
+name: Deploy Web
+
+on:
+  workflow_dispatch:
+    inputs:
+      image_tag:
+        description: "40-character Git commit SHA to deploy"
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-web
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Validate image tag
+        env:
+          IMAGE_TAG: ${{ inputs.image_tag }}
+        run: |
+          if [[ ! "$IMAGE_TAG" =~ ^[0-9a-f]{40}$ ]]; then
+            echo "image_tag must be a 40-character lowercase Git commit SHA" >&2
+            exit 1
+          fi
+
+      - name: Configure SSH
+        env:
+          SERVER_KNOWN_HOSTS: ${{ vars.SERVER_KNOWN_HOSTS }}
+          SERVER_SSH_KEY: ${{ secrets.SERVER_SSH_KEY }}
+        run: |
+          test -n "$SERVER_KNOWN_HOSTS"
+          test -n "$SERVER_SSH_KEY"
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "$SERVER_KNOWN_HOSTS" > ~/.ssh/known_hosts
+          printf '%s\n' "$SERVER_SSH_KEY" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+
+      - name: Copy deployment config
+        env:
+          SERVER_HOST: ${{ vars.SERVER_HOST }}
+          SERVER_USER: ${{ vars.SERVER_USER }}
+        run: |
+          test -n "$SERVER_HOST"
+          test -n "$SERVER_USER"
+          scp -i ~/.ssh/id_ed25519 compose.load-balancing.yaml "$SERVER_USER@$SERVER_HOST:/opt/equity-trading/compose.load-balancing.yaml"
+
+      - name: Pull and restart only Web
+        env:
+          IMAGE_TAG: ${{ inputs.image_tag }}
+          SERVER_HOST: ${{ vars.SERVER_HOST }}
+          SERVER_USER: ${{ vars.SERVER_USER }}
+        run: |
+          ssh -i ~/.ssh/id_ed25519 "$SERVER_USER@$SERVER_HOST" "
+            cd /opt/equity-trading &&
+            WEB_IMAGE_TAG='$IMAGE_TAG' docker compose -f compose.load-balancing.yaml config --quiet &&
+            WEB_IMAGE_TAG='$IMAGE_TAG' docker compose -f compose.load-balancing.yaml pull web &&
+            WEB_IMAGE_TAG='$IMAGE_TAG' docker compose -f compose.load-balancing.yaml up -d --no-deps web &&
+            docker inspect --format '{{.State.Status}} health={{.State.Health.Status}}' equity-trading-web-1
+          "
