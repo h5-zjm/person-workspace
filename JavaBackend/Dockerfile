@@ -15,5 +15,4 @@ COPY --from=build /app/target/*.jar /app/app.jar
 
 EXPOSE 8080
 
-# Controlled api2 rollback drill: only the new image honors ROLLBACK_DRILL_API2.
-ENTRYPOINT ["sh", "-c", "if [ \"${ROLLBACK_DRILL_API2:-}\" = \"true\" ]; then exec java -jar /app/app.jar --server.port=8081; else exec java -jar /app/app.jar; fi"]
+ENTRYPOINT ["java", "-jar", "/app/app.jar"]
