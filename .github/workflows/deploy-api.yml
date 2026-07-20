@@ -117,6 +117,9 @@ jobs:
           }
 
           docker compose -f compose.load-balancing.yaml config --quiet
+          docker compose -f compose.load-balancing.yaml pull mysql
+          docker compose -f compose.load-balancing.yaml up -d mysql
+          wait_healthy mysql
           docker compose -f compose.load-balancing.yaml pull api1 api2
 
           start_service "$API_IMAGE_TAG" api1

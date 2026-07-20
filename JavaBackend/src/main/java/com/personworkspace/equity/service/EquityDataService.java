@@ -1,32 +1,28 @@
 package com.personworkspace.equity.service;
 
 import java.math.BigDecimal;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
 import java.util.function.Predicate;
 
+import com.personworkspace.equity.persistence.CompanyEntity;
+import com.personworkspace.equity.persistence.CompanyRepository;
+import com.personworkspace.equity.persistence.ProjectEntity;
+import com.personworkspace.equity.persistence.ProjectRepository;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 
 @Service
 public class EquityDataService {
-    private static final List<Company> COMPANIES = List.of(
-        new Company("company-128", "智造新材", "Q000128", "已挂牌", "先进制造", "杭州", "创新层", "2026-05-20"),
-        new Company("company-116", "云链科技", "Q000116", "已挂牌", "企业服务", "宁波", "培育层", "2026-05-18"),
-        new Company("company-098", "绿源生物", "Q000098", "已挂牌", "生物医药", "绍兴", "展示层", "2026-05-16"),
-        new Company("company-087", "数智云科", "Q000087", "已挂牌", "数字经济", "杭州", "创新层", "2026-05-12"),
-        new Company("company-076", "清能动力", "Q000076", "已挂牌", "绿色能源", "嘉兴", "培育层", "2026-05-09")
-    );
+    private final CompanyRepository companyRepository;
+    private final ProjectRepository projectRepository;
 
-    private static final List<Project> PROJECTS = List.of(
-        new Project("project-001", "智造新材 A轮融资", "FUNDRAISING", "先进制造", "杭州", new BigDecimal("3000"), "万元", List.of("已认证", "材料已披露"), 12, null),
-        new Project("project-002", "云链科技股权融资", "ROADSHOW", "企业服务", "宁波", new BigDecimal("1800"), "万元", List.of("材料已披露"), null, "2026-05-28 14:00"),
-        new Project("project-003", "绿源生物战略融资", "FUNDRAISING", "生物医药", "绍兴", new BigDecimal("5000"), "万元", List.of("专精特新", "已认证"), 8, null),
-        new Project("project-004", "数智云科天使轮融资", "ENDED", "数字经济", "杭州", new BigDecimal("1200"), "万元", List.of("材料已披露"), 15, null),
-        new Project("project-005", "清能动力产业融资", "ROADSHOW", "绿色能源", "嘉兴", new BigDecimal("4200"), "万元", List.of("已认证"), null, "2026-06-02 10:00")
-    );
+    public EquityDataService(CompanyRepository companyRepository, ProjectRepository projectRepository) {
+        this.companyRepository = companyRepository;
+        this.projectRepository = projectRepository;
+    }
 
+    @Transactional(readOnly = true)
     public HomeData home() {
         var news = new NewsGroups(
             List.of(
@@ -45,27 +41,26 @@ public class EquityDataService {
         );
         return new HomeData(
             new HomeOverview(128, 12, new BigDecimal("36.8"), "亿元", "09:30"),
-            List.of(
-                new FeaturedProject("project-001", "智造新材", "先进制造", List.of("已认证"), new BigDecimal("3000"), "万元", "杭州"),
-                new FeaturedProject("project-002", "云链科技", "企业服务", List.of("材料已披露"), new BigDecimal("1800"), "万元", "宁波")
-            ),
+            projectRepository.findAllByOrderByIdAsc().stream().limit(2).map(this::toFeaturedProject).toList(),
             news
         );
     }
 
+    @Transactional(readOnly = true)
     public MarketData market(String keyword, String industry, String region, String companyLevel, int page, int size) {
         Predicate<Company> filter = company -> contains(company.shortName(), keyword) || contains(company.listingCode(), keyword);
         filter = optional(filter, industry, company -> company.industry().equals(industry));
         filter = optional(filter, region, company -> company.region().equals(region));
         filter = optional(filter, companyLevel, company -> company.companyLevel().equals(companyLevel));
-        List<Company> matched = COMPANIES.stream()
+        List<Company> matched = companyRepository.findAllByOrderByLatestDisclosureDateDesc().stream()
+            .map(this::toCompany)
             .filter(filter)
-            .sorted(Comparator.comparing(Company::latestDisclosureDate).reversed())
             .toList();
         int total = isBlank(keyword) && isBlank(industry) && isBlank(region) && isBlank(companyLevel) ? 128 : matched.size();
         return new MarketData(new MarketOverview(128, 4, 6, "09:30"), total, page, size, page(matched, page, size));
     }
 
+    @Transactional(readOnly = true)
     public ProjectsData projects(String keyword, String status, String industry, String region, String financingScale, int page, int size) {
         Predicate<Project> filter = project -> contains(project.title(), keyword);
         if (!isBlank(status) && !"ALL".equalsIgnoreCase(status)) {
@@ -76,7 +71,7 @@ public class EquityDataService {
         if (!isBlank(financingScale)) {
             filter = filter.and(project -> inScale(project.financingAmount(), financingScale));
         }
-        List<Project> matched = PROJECTS.stream().filter(filter).toList();
+        List<Project> matched = projectRepository.findAllByOrderByIdAsc().stream().map(this::toProject).filter(filter).toList();
         int total = aggregateProjectTotal(keyword, status, industry, region, financingScale, matched.size());
         return new ProjectsData(
             new ProjectCounts(26, 18, 5, 3),
@@ -85,6 +80,46 @@ public class EquityDataService {
             page,
             size,
             page(matched, page, size)
+        );
+    }
+
+    private FeaturedProject toFeaturedProject(ProjectEntity project) {
+        return new FeaturedProject(
+            project.getId(),
+            project.getCompanyName(),
+            project.getIndustry(),
+            project.getTags(),
+            project.getFinancingAmount(),
+            project.getFinancingUnit(),
+            project.getRegion()
+        );
+    }
+
+    private Company toCompany(CompanyEntity company) {
+        return new Company(
+            company.getId(),
+            company.getShortName(),
+            company.getListingCode(),
+            company.getListingStatus(),
+            company.getIndustry(),
+            company.getRegion(),
+            company.getCompanyLevel(),
+            company.getLatestDisclosureDate().toString()
+        );
+    }
+
+    private Project toProject(ProjectEntity project) {
+        return new Project(
+            project.getId(),
+            project.getTitle(),
+            project.getStatus(),
+            project.getIndustry(),
+            project.getRegion(),
+            project.getFinancingAmount(),
+            project.getFinancingUnit(),
+            project.getTags(),
+            project.getIntentCount(),
+            project.getNextRoadshowAt()
         );
     }
 
