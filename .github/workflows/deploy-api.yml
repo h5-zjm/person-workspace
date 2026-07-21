@@ -108,6 +108,16 @@ jobs:
             start_service "$tag" "$service"
           }
 
+          print_failure_diagnostics() {
+            service="$1"
+            container="equity-trading-$service-1"
+            echo "=== $container diagnostics before rollback ===" >&2
+            docker inspect --format 'state={{json .State}}' "$container" || true
+            docker inspect --format 'health={{json .State.Health}}' "$container" || true
+            docker logs --timestamps --tail 200 "$container" || true
+            echo "=== end $container diagnostics ===" >&2
+          }
+
           write_release_state() {
             tag="$1"
             tmp_file="$(mktemp "${state_file}.XXXXXX")"
@@ -124,7 +134,8 @@ jobs:
           docker compose -f compose.load-balancing.yaml pull api1 api2
 
           start_service "$API_IMAGE_TAG" api1
-          if ! wait_healthy api1; then
+          if ! wait_healthy api1 30; then
+            print_failure_diagnostics api1
             rollback_service "$previous_tag" api1
             wait_healthy api1 || exit 1
             echo "api1 failed the new release and was restored to $previous_tag" >&2
@@ -135,7 +146,8 @@ jobs:
           sleep 12
 
           start_service "$API_IMAGE_TAG" api2
-          if ! wait_healthy api2; then
+          if ! wait_healthy api2 30; then
+            print_failure_diagnostics api2
             rollback_service "$previous_tag" api2
             wait_healthy api2 || exit 1
             sleep 12
