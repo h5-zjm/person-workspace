@@ -6,7 +6,12 @@ services:
     restart: unless-stopped
     cpus: "0.50"
     mem_limit: 512m
-    command: ["--innodb-buffer-pool-size=128M"]
+    command:
+      - "--innodb-buffer-pool-size=128M"
+      - "--innodb-log-buffer-size=16M"
+      - "--performance-schema=OFF"
+      - "--max-connections=32"
+      - "--table-open-cache=256"
     environment:
       MYSQL_DATABASE: "${MYSQL_DATABASE:-equity_trading}"
       MYSQL_USER: "${MYSQL_USER:-equity_app}"
@@ -33,6 +38,7 @@ services:
       SPRING_DATASOURCE_URL: "jdbc:mysql://mysql:3306/${MYSQL_DATABASE:-equity_trading}?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai"
       SPRING_DATASOURCE_USERNAME: "${MYSQL_USER:-equity_app}"
       SPRING_DATASOURCE_PASSWORD: "${MYSQL_PASSWORD:?MYSQL_PASSWORD must be set in .env}"
+      SPRING_DATASOURCE_HIKARI_MAXIMUM_POOL_SIZE: "3"
     depends_on:
       mysql:
         condition: service_healthy
@@ -57,6 +63,7 @@ services:
       SPRING_DATASOURCE_URL: "jdbc:mysql://mysql:3306/${MYSQL_DATABASE:-equity_trading}?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai"
       SPRING_DATASOURCE_USERNAME: "${MYSQL_USER:-equity_app}"
       SPRING_DATASOURCE_PASSWORD: "${MYSQL_PASSWORD:?MYSQL_PASSWORD must be set in .env}"
+      SPRING_DATASOURCE_HIKARI_MAXIMUM_POOL_SIZE: "3"
     depends_on:
       mysql:
         condition: service_healthy
